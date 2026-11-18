@@ -311,6 +311,19 @@ body.i3d .intro{display:flex;flex-direction:column;align-items:center;justify-co
 #hg .hc b,.lf b{font-size:clamp(15px,3.8vw,18px);line-height:1.1;margin:0;word-break:break-word}
 #hg .hc:hover,#hg .hc:nth-child(even):hover{transform:translateY(-5px) rotate(-4deg)}
 #hg .hc:active{transform:scale(.96)}
+
+/* postcard: always readable, above the bear in bottom corners and below it in top corners */
+#bear .pc{left:var(--pcx,0px);margin:0 0 10px;width:min(260px,calc(100vw - 40px));box-sizing:border-box;padding:14px 18px 12px}
+#bear.bt .pc{margin:10px 0 0}
+#bear.cd .pc{pointer-events:auto;cursor:pointer}
+#bear .pc b{font-size:18px;line-height:1.35}
+#bear .pc small{font-size:12px}
+/* menu opens toward the middle of the screen, beside the bear */
+#bear #bmenu{top:auto;bottom:0;left:auto;right:100%;margin:0 6px 0 0;gap:4px;align-items:flex-end;transform:translateX(10px) scale(.92)}
+#bear.sl #bmenu{right:auto;left:100%;margin:0 0 0 6px;align-items:flex-start;transform:translateX(-10px) scale(.92)}
+#bear.bt #bmenu{bottom:auto;top:0}
+#bear.mn #bmenu,#bear.sl.mn #bmenu{transform:none}
+#bear #bmenu button{padding:7px 12px}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="gul" viewBox="-50 -50 100 100"><circle r="47"/><circle r="38" stroke-dasharray="1 5"/><circle r="8"/><g id="pp"><ellipse cy="-24" rx="7" ry="13"/><path d="M0-37V-45"/></g><use href="#pp" transform="rotate(45)"/><use href="#pp" transform="rotate(90)"/><use href="#pp" transform="rotate(135)"/><use href="#pp" transform="rotate(180)"/><use href="#pp" transform="rotate(225)"/><use href="#pp" transform="rotate(270)"/><use href="#pp" transform="rotate(315)"/></symbol>
@@ -487,19 +500,19 @@ addEventListener('pointerdown',e=>{if(!started){started=1;st=Date.now();aud();ac
 const B=$('#bear'),E={};['b0','aL','eL','aR','eR','lL','kL','lR','kR','hd','mo','ey','sh'].forEach(i=>E[i]=document.getElementById(i));
 const DM=['disco','bounce','twist','wave','robot','spin','headbang','shimmy'],D={y:0,rot:0,hd:0,aL:10,eL:10,aR:10,eR:10,lL:0,kL:4,lR:0,kR:4,fx:1,mo:.2},P={...D};
 let bx=0,by=0,tx2=0,ty2=0,held=0,moved=0,ox=0,oy=0,sx=0,sy=0,mode='dance',mt=performance.now(),mdur=3,dm='wave',ph=0,spd=0,dr=1,t0=performance.now(),menuT=0,nb=0,be=0;
-function zone(){const w=B.offsetWidth||78,h=w*1.23,W=innerWidth,H=innerHeight,m=W<720;return{x0:W-w-(m?64:120),x1:W-w-(m?6:24),y0:H-h-(m?70:110),y1:H-h-(m?22:24)}}
+let corner='br',run=0;try{const c=localStorage.getItem('bear_corner');if(/^[tb][lr]$/.test(c))corner=c}catch(e){}
+function zone(c){c=c||corner;const w=B.offsetWidth||78,h=w*1.23,W=innerWidth,H=innerHeight,m=W<720,nb=$('#nav .nb'),top=(nb?nb.getBoundingClientRect().bottom:70)+10,rx=m?56:96,ry=m?44:80,ex=m?6:24,L=c[1]=='l',T=c[0]=='t',x0=L?ex:W-w-ex-rx,y0=T?top:H-h-(m?22:24)-ry;return{x0,x1:x0+rx,y0,y1:y0+ry}}
+function home(c){const z=zone(c);return[c[1]=='l'?z.x0:z.x1,c[0]=='t'?z.y0:z.y1]}
 const cl=(v,a,b)=>Math.min(b,Math.max(a,v));
-function clampZ(){const z=zone();bx=cl(bx,z.x0,z.x1);by=cl(by,z.y0,z.y1);tx2=cl(tx2,z.x0,z.x1);ty2=cl(ty2,z.y0,z.y1)}
-{const z=zone();bx=tx2=z.x1;by=ty2=z.y1}addEventListener('resize',clampZ);
-const IMP='h1,h2,h3,p,li,.big,.b,button,input,textarea,select,.row,.cri,.fc,svg#cs,#arena,#sky';
-function covers(){const pc=B.querySelector('.pc'),r=pc.getBoundingClientRect(),w=pc.offsetWidth,h=pc.offsetHeight,bw=B.offsetWidth,l=bx+bw/2-106+(B._px||0),t=by-h,root=$('#det').classList.contains('on')?$('#det'):pgs[cur];
-return [...root.querySelectorAll(IMP)].some(e=>{if(e.closest('#bear'))return false;const q=e.getBoundingClientRect();return q.width&&q.height&&q.left<l+w&&q.right>l&&q.top<t+h&&q.bottom>t})}
-function card(t,a,force){$('#pq').textContent=t;$('#pa').textContent=a?'— '+a:'';if(!force&&covers()){B.classList.add('nq');return}B.classList.remove('nq');B.classList.add('cd');clearTimeout(ct);ct=setTimeout(()=>B.classList.remove('cd'),force?9000:6000)}
+function clampZ(){B._pw=0;if(held||run)return;const z=zone();bx=cl(bx,z.x0,z.x1);by=cl(by,z.y0,z.y1);tx2=cl(tx2,z.x0,z.x1);ty2=cl(ty2,z.y0,z.y1)}
+function goHome(){menu(0);const w=B.offsetWidth||78,h=w*1.23;corner=(by+h/2<innerHeight/2?'t':'b')+(bx+w/2<innerWidth/2?'l':'r');try{localStorage.setItem('bear_corner',corner)}catch(e){}[tx2,ty2]=home(corner);run=1;mode='walk';mt=performance.now();mdur=20}
+[bx,by]=home(corner);tx2=bx;ty2=by;addEventListener('resize',clampZ);
+function card(t,a){$('#pq').textContent=t;$('#pa').textContent=a?'— '+a:'';B._pw=0;B.classList.remove('cd');void B.offsetWidth;B.classList.add('cd');clearTimeout(ct);ct=setTimeout(()=>B.classList.remove('cd'),7000)}
 function menu(o){B.classList.toggle('mn',o);clearTimeout(menuT);if(o)menuT=setTimeout(()=>menu(0),9000)}
 function startDance(n,m){mode='dance';mt=n;mdur=3.5+Math.random()*2.5;dm=m||DM[Math.random()*DM.length|0];spd=0}
 function startWalk(n){mode='walk';mt=n;mdur=3+Math.random()*3;const z=zone();tx2=z.x0+Math.random()*(z.x1-z.x0);ty2=z.y0+Math.random()*(z.y1-z.y0)}
 function forceDance(m){startDance(performance.now(),m);mdur=6}
-function tgt(n){const T={...D},s=Math.sin,c=Math.cos,PI=Math.PI,t=(n-mt)/1000,mx=Math.max;let b;
+function tgt(n){const T={...D},s=Math.sin,c=Math.cos,PI=Math.PI,t=Math.max(0,(n-mt)/1000),mx=Math.max;let b;
 if(held){const w=n*.008;Object.assign(T,{y:-4,hd:8*s(w*1.3),aL:130+25*s(w*1.7),eL:20,aR:130+25*c(w*1.4),eR:20,lL:12*s(w),kL:14+10*s(w),lR:-12*s(w*1.1),kR:14+10*c(w),mo:.9});return T}
 if(mode=='walk'){const a=ph;Object.assign(T,{lL:-dr*26*s(a),lR:dr*26*s(a),kL:dr*38*mx(0,c(a)),kR:dr*38*mx(0,-c(a)),y:1.8*c(2*a)-1,rot:dr*4+3*s(a),hd:2*s(a),aL:16+12*s(a+PI),aR:16+12*s(a),eL:24,eR:24,mo:.35})}
 else switch(dm){
@@ -515,7 +528,7 @@ if(B.classList.contains('cd')){T.aL=T.aR=168;T.eL=T.eR=0}
 T.y+=.8*s(n*.003);return T}
 (function BL(n){requestAnimationFrame(BL);const dt=Math.min(.05,(n-t0)/1000||.016);t0=n;const hold=B.classList.contains('mn');
 if(!held){if(hold&&mode=='walk')startDance(n);
-if(mode=='walk'){const dx=tx2-bx,dy=ty2-by,d=Math.hypot(dx,dy);spd+=((d>6?58:0)-spd)*Math.min(1,dt*4);if(d>1){bx+=dx/d*spd*dt;by+=dy/d*spd*dt;if(Math.abs(dx)>4)dr=dx>0?1:-1}ph+=spd*dt*.09;if(n-mt>mdur*1000||d<6)startDance(n)}
+if(mode=='walk'){const dx=tx2-bx,dy=ty2-by,d=Math.hypot(dx,dy);spd+=((d>6?(run?520:58):0)-spd)*Math.min(1,dt*(run?6:4));if(d>1){bx+=dx/d*spd*dt;by+=dy/d*spd*dt;if(Math.abs(dx)>4)dr=dx>0?1:-1}ph+=spd*dt*.09;if(n-mt>mdur*1000||d<6){if(run){run=0;bx=tx2;by=ty2}startDance(n)}}
 else if(n-mt>mdur*1000&&!hold)startWalk(n)}
 const T=tgt(n),k=Math.min(1,dt*10);for(const i in D){if(i!='fx')P[i]+=(T[i]-P[i])*k}
 P.fx=(mode=='dance'&&dm=='spin'&&!held)?Math.cos((n-mt)/1000*Math.PI*2*1.3):P.fx+(1-P.fx)*k;
@@ -524,10 +537,11 @@ const p=P,A=(e,v)=>e.setAttribute('transform',v);A(E.b0,`translate(0 ${p.y}) rot
 A(E.aL,`translate(31 70) rotate(${p.aL})`);A(E.aR,`translate(69 70) rotate(${-p.aR})`);A(E.eL,`translate(0 19) rotate(${p.eL})`);A(E.eR,`translate(0 19) rotate(${-p.eR})`);
 A(E.lL,`translate(40 96) rotate(${p.lL})`);A(E.lR,`translate(60 96) rotate(${p.lR})`);A(E.kL,`translate(0 11) rotate(${p.kL})`);A(E.kR,`translate(0 11) rotate(${p.kR})`);
 A(E.hd,`translate(50 60) rotate(${p.hd})`);E.mo.setAttribute('ry',Math.max(.8,p.mo*4.5));A(E.ey,`translate(0 -24) scale(1 ${n<be?.1:1})`);E.sh.setAttribute('rx',Math.max(10,22+p.y*.35));
-B.style.transform=`translate3d(${bx}px,${by}px,0)`;B.classList.toggle('bt',by<190);{const pw=B._pw||(B._pw=B.querySelector('.pc').offsetWidth),l=bx+B.offsetWidth/2-106,x=Math.round(Math.max(8-l,Math.min(0,innerWidth-8-pw-l)));if(x!==B._px){B._px=x;B.style.setProperty('--pcx',x+'px')}}B.classList.toggle('up',by>innerHeight-210)})(t0);
-B.addEventListener('pointerdown',e=>{if(e.target.closest('#bmenu'))return;held=1;moved=0;sx=e.clientX;sy=e.clientY;ox=e.clientX-bx;oy=e.clientY-by;B.setPointerCapture(e.pointerId);B.classList.add('held')});
-B.addEventListener('pointermove',e=>{if(!held)return;if(Math.hypot(e.clientX-sx,e.clientY-sy)>6)moved=1;const z=zone();bx=cl(e.clientX-ox,z.x0,z.x1);by=cl(e.clientY-oy,z.y0,z.y1);tx2=bx;ty2=by});
-B.addEventListener('pointerup',()=>{if(!held)return;held=0;B.classList.remove('held');startDance(performance.now());if(!moved){const o=!B.classList.contains('mn');menu(o);if(o)card(...Q[qi++%Q.length],1);else B.classList.remove('cd')}});
+B.style.transform=`translate3d(${bx}px,${by}px,0)`;{const bw=B.offsetWidth,W=innerWidth,pw=B._pw||(B._pw=B.querySelector('.pc').offsetWidth),tl=W<720?(W-pw)/2:cl(bx+bw/2-pw/2,10,W-10-pw),x=Math.round(tl-bx);B.classList.toggle('bt',by+bw*.6<innerHeight/2);B.classList.toggle('sl',bx+bw/2<W/2);if(x!==B._px){B._px=x;B.style.setProperty('--pcx',x+'px')}}})(t0);
+B.addEventListener('pointerdown',e=>{if(e.target.closest('#bmenu'))return;if(e.target.closest('.pc')){B.classList.remove('cd');return}run=0;held=1;moved=0;sx=e.clientX;sy=e.clientY;ox=e.clientX-bx;oy=e.clientY-by;B.setPointerCapture(e.pointerId);B.classList.add('held')});
+B.addEventListener('pointermove',e=>{if(!held)return;if(Math.hypot(e.clientX-sx,e.clientY-sy)>6)moved=1;const w=B.offsetWidth,h=w*1.23;bx=cl(e.clientX-ox,0,innerWidth-w);by=cl(e.clientY-oy,0,innerHeight-h);tx2=bx;ty2=by});
+B.addEventListener('pointercancel',()=>{if(held){held=0;B.classList.remove('held');goHome()}});
+B.addEventListener('pointerup',()=>{if(!held)return;held=0;B.classList.remove('held');if(moved){goHome();return}startDance(performance.now());if(!moved){const o=!B.classList.contains('mn');menu(o);if(o)card(...Q[qi++%Q.length]);else B.classList.remove('cd')}});
 addEventListener('pointerdown',e=>{if(!e.target.closest('#bear'))menu(0)},true);
 $('#bm1').onclick=()=>{menu(0);openChat()};$('#bm2').onclick=()=>{menu(0);cyc(1)};
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}}),{threshold:.12});
@@ -572,7 +586,7 @@ function go(i,nh,fx){i=(i+N)%N;const pv=pgs[cur];if(fx=='globe'&&pv!==pgs[i]){pv
 $$('.lk').forEach(b=>b.classList.toggle('cur',+b.dataset.i==i));$$('.bgl').forEach((d,k)=>d.classList.toggle('on',k==i));
 pgs[i].querySelectorAll('.rv').forEach(e=>{e.classList.remove('vis');void e.offsetWidth;io.observe(e)});
 shrink();off=0;const g=$('#ghost');g.style.opacity=0;setTimeout(()=>{g.textContent=GW[i];g.style.opacity=1},550);
-if(fx!='globe'){F.setFlower(i);F.burst(50);fnm(i)}if(R[i]=='tanqid'&&window.critLoad)critLoad();mood(...M[i]);if(i){clearTimeout(window._qT);window._qT=setTimeout(()=>card(...Q[qi++%Q.length]),1600)}if(!nh)location.hash=R[i]}
+if(fx!='globe'){F.setFlower(i);F.burst(50);fnm(i)}if(R[i]=='tanqid'&&window.critLoad)critLoad();mood(...M[i]);if(window._qB){clearTimeout(window._qT);window._qT=setTimeout(()=>card(...Q[qi++%Q.length]),1500)}window._qB=1;if(!nh)location.hash=R[i]}
 addEventListener('hashchange',()=>{const i=R.indexOf(location.hash.slice(1));if(i>=0&&i!=cur)go(i,1)});
 let stp=0;$('#gb').onclick=()=>{const a=$('#arena');let n=0,t=0;a.innerHTML='';$('#cnt').textContent=0;$('#gm').textContent='';$('#gb').disabled=true;const E=[['Kit Kat','🍫'],['Laghman','🍜'],['Mushuklar','🐱'],['Fuse Tea','🧃'],['Yoz','☀️'],['Oshpazlik va kinolar','🍳'],[0,'🌸']];
 const iv=setInterval(()=>{if(++t>40){clearInterval(iv);setTimeout(()=>{$('#gb').disabled=false;$('#gb').textContent='Yana oʻynaymizmi?';$('#gm').textContent='Zoʻr, '+n+' ta tutding!';F.burst(120)},3600);return}
@@ -585,7 +599,7 @@ setTimeout(()=>{++i<Qz.length?r():(Bx.innerHTML=`<h3>${sc}/3. Koʻrdingmi, eslay
 $('#wtb').onclick=()=>$('#wt').hidden=false;
 const fxs=$$('.fx');let tx=0,ty=0,px=0,py=0,sc=0;
 addEventListener('pointermove',e=>{tx=e.clientX/innerWidth-.5;ty=e.clientY/innerHeight-.5});addEventListener('wheel',e=>bump+=e.deltaY*.4,{passive:true});
-addEventListener('scroll',e=>{const t=e.target;if(t.classList&&t.classList.contains('pg')){off=t.scrollTop*.6;shrink();if(B.classList.contains('cd')&&!B.classList.contains('mn')&&covers())B.classList.remove('cd')}},true);
+addEventListener('scroll',e=>{const t=e.target;if(t.classList&&t.classList.contains('pg')){off=t.scrollTop*.6;shrink()}},true);
 (function A(){requestAnimationFrame(A);px+=(tx-px)*.06;py+=(ty-py)*.06;sc+=(cur*160+off+bump-sc)*.05;bump*=.93;
 fxs.forEach(e=>{const d=+e.dataset.d,s=e.dataset.s?sc*d*.004:0;e.style.transform=`translate3d(${px*d}px,${py*d+s}px,0)`})})();
 
