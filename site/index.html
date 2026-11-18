@@ -680,7 +680,7 @@ function render(){const L=[...SEED.map((x,i)=>({...x,by:'Farkhod',ts:i,mine:fals
 arr.forEach((x,i)=>{const d=document.createElement('div'),p=document.createElement('p'),sm=document.createElement('small');d.className='cri';p.style.margin='0';p.textContent=(i+1)+'. '+x.text;sm.textContent=(x.by||'Mehmon')+(x.mine?' (sen)':'');d.append(p,sm);
 if(x.mine){const a=document.createElement('div');a.className='ca';const r=btn('Oʻchirish','g',()=>{if(r.dataset.c)act({action:'delete',id:x.id});else{r.dataset.c=1;r.textContent='Aniqmi?';setTimeout(()=>{r.dataset.c='';r.textContent='Oʻchirish'},3000)}});a.append(btn('Tahrirlash','g',()=>edit(x,d)),r);d.append(a)}box.append(d)})})}
 $$('.cradd').forEach(b=>b.onclick=()=>{const ta=b.parentElement.querySelector('.crt'),v=ta.value.trim();if(!v)return;act({action:'add',side:b.dataset.side,text:v,by:nameEl.value.trim()},()=>{ta.value='';F.burst(30)})});
-render();load();setInterval(()=>{if(pgs[cur].id=='p-tanqid'&&!document.hidden&&!busy&&!document.querySelector('#p-tanqid .cri textarea'))load()},20000);window.critLoad=load})();
+render();load();setInterval(()=>{if(pgs[cur].id=='p-tanqid'&&!document.hidden&&!busy&&!document.querySelector('#p-tanqid .cri textarea'))load()},60000);window.critLoad=load})();
 (function(){const g=s=>$(s),bt=g('#fbs'),st=g('#fbt');
 bt.onclick=async()=>{const m=g('#fbm').value.trim();if(!m){st.textContent='Avval biror narsa yoz.';return}bt.disabled=true;st.textContent='Yuborilmoqda…';
 try{const r=await fetch('/api/feedback',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:g('#fbn').value.trim(),message:m})}),d=await r.json().catch(()=>({}));if(!r.ok||!d.ok)throw 0;
