@@ -301,6 +301,16 @@ body.i3d .intro{display:flex;flex-direction:column;align-items:center;justify-co
 .gbtn .b{display:inline-flex;align-items:center;gap:10px;padding:7px 18px 7px 7px}
 .fall img{display:block;width:58px;height:58px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 8px 18px rgba(138,35,70,.3);pointer-events:none;-webkit-user-drag:none}
 #wm{display:flex;flex-direction:column;align-items:center;justify-content:center}
+
+/* little leaves, all parallel */
+.leaves{text-align:center}.leaves .lead{margin-left:auto;margin-right:auto}
+#hg{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 12px;max-width:980px;margin:6px auto 0}
+#hg .hc,.lf{width:clamp(96px,26vw,124px);min-height:0;aspect-ratio:1;padding:10px 8px;box-sizing:border-box;border-radius:6px 52px 6px 52px;justify-content:center;align-items:center}
+#hg .hc:nth-child(even),.lf.ev{border-radius:6px 52px 6px 52px}
+#hg .hc:nth-child(even)::before,.lf.ev::before{background:linear-gradient(to top right,transparent calc(50% - .7px),rgba(138,35,70,.28) 50%,transparent calc(50% + .7px))}
+#hg .hc b,.lf b{font-size:clamp(15px,3.8vw,18px);line-height:1.1;margin:0;word-break:break-word}
+#hg .hc:hover,#hg .hc:nth-child(even):hover{transform:translateY(-5px) rotate(-4deg)}
+#hg .hc:active{transform:scale(.96)}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="gul" viewBox="-50 -50 100 100"><circle r="47"/><circle r="38" stroke-dasharray="1 5"/><circle r="8"/><g id="pp"><ellipse cy="-24" rx="7" ry="13"/><path d="M0-37V-45"/></g><use href="#pp" transform="rotate(45)"/><use href="#pp" transform="rotate(90)"/><use href="#pp" transform="rotate(135)"/><use href="#pp" transform="rotate(180)"/><use href="#pp" transform="rotate(225)"/><use href="#pp" transform="rotate(270)"/><use href="#pp" transform="rotate(315)"/></symbol>
@@ -318,6 +328,7 @@ body.i3d .intro{display:flex;flex-direction:column;align-items:center;justify-co
 <p class="mut">Hammasini shu yerga yozdim. Shoshilma, ohista koʻrib chiq.</p>
 <div><button class="b" data-go="1">Ochib koʻr</button></div></div></div>
 <div class="sec rv"><div class="gl mx"><div><div class="band"></div><h2>Nega shu sahifa?</h2><p>Oʻzimcha oʻylab yurganim bilan boʻlmasdi. Shuning uchun senga yoqadigan narsalarni, bizning xotiralarimizni va oxirida aytmoqchi boʻlgan gapimni shu yerga yigʻdim.</p><p>Oxirigacha koʻrsang, xursand boʻlaman. Har sahifaning pastida kichkina bir uzr ham bor.</p></div></div></div>
+<div class="sec leaves"><h2 class="rv">Ichida nimalar bor</h2><p class="lead rv">Bittasini bos: barg uchib, seni oʻsha sahifaga olib boradi.</p><div id="hg"></div></div>
 <p class="sorry rv">Avval shuni aytib qoʻyay: seni xafa qilganim uchun juda afsusdaman.</p></div></section>
 <section class="pg" id="p-dunyo"><div class="wrap"><div class="sec rv"><div class="band"></div><h2>Sen yaxshi koʻradigan narsalar</h2><p class="lead">Hammasini eslab qolganman. Birortasini bossang, u haqida batafsilroq yozganman.</p></div>
 <div class="grid fgrid" id="fg"></div>
@@ -520,6 +531,7 @@ B.addEventListener('pointerup',()=>{if(!held)return;held=0;B.classList.remove('h
 addEventListener('pointerdown',e=>{if(!e.target.closest('#bear'))menu(0)},true);
 $('#bm1').onclick=()=>{menu(0);openChat()};$('#bm2').onclick=()=>{menu(0);cyc(1)};
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}}),{threshold:.12});
+$('#hg').innerHTML=[1,2,3,4,5,6,7].map((i,k)=>`<button class="hc rv" style="--d:${k}" data-fly="${i}" title="${['Kitobing, serialing, qoʻshiqlaring','Maktabdan yoz kechalarigacha','Zerikkaningda oʻynab koʻr','Ikkimiz ham aytadigan gaplar','Uchta savol','Asosiy gapim','Endi qanday boʻlishim haqida'][k]}"><b>${ST[i]}</b></button>`).join('');
 $$('[data-g]').forEach(b=>b.insertAdjacentHTML('afterbegin',tn(XP[b.dataset.g],b.dataset.fb)));
 $('#fg').innerHTML=FV.map((f,i)=>`<button class="fc rv" style="--d:${i%4}" data-f="${i}">${phI(f,'e')}<b>${f.n}</b><small>${f.k}, ${f.l}</small><em>Batafsil →</em></button>`).join('');
 $('#pl').innerHTML=[['Olivia Rodrigo, deja vu',sp('Olivia Rodrigo deja vu')],['Olivia Rodrigo, traitor',sp('Olivia Rodrigo traitor')],['KATSEYE, Animal',sp('KATSEYE Animal')],['Jennie',sp('Jennie')],['Lisa',sp('Lisa')],['Ravyn Lenae, Love Me Not (bizning fon qoʻshigʻimiz)',sp('Ravyn Lenae Love Me Not')]].map(r=>`<div class="row"><b>${r[0]}</b><a class="b" target="_blank" rel="noopener" href="${r[1]}">Spotify’da ochish</a></div>`).join('');
