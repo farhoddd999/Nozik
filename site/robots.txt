@@ -1,0 +1,12 @@
+# Link-preview bots may read the page so shared links show a picture.
+User-agent: TelegramBot
+User-agent: WhatsApp
+User-agent: facebookexternalhit
+User-agent: Twitterbot
+User-agent: Slackbot
+User-agent: Discordbot
+Allow: /
+
+# Everyone else, including search engines: stay out.
+User-agent: *
+Disallow: /
