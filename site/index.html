@@ -341,6 +341,14 @@ body.i3d .intro{display:flex;flex-direction:column;align-items:center;justify-co
 .sw-rip ellipse+ellipse{animation-delay:2.5s}
 @keyframes swr{0%{transform:scale(.55,.6);opacity:.7}100%{transform:scale(1.15,1.5);opacity:0}}
 @media(prefers-reduced-motion:reduce){.sw-bob,.sw-rip ellipse{animation:none}}
+
+/* dark mode: the white flower stays bright on the intro, then dims behind text so it stays readable */
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) #c{transition:opacity .8s ease;opacity:.3}:root:not([data-theme="light"]) body.flfull #c{opacity:1}}
+:root[data-theme="dark"] #c{transition:opacity .8s ease;opacity:.3}:root[data-theme="dark"] body.flfull #c{opacity:1}
+
+/* phone menu: scrolls on short screens, and the bear steps aside while it is open */
+#drawer{overflow-y:auto;overscroll-behavior:contain}
+body.mo #bear{opacity:0;pointer-events:none;transition:opacity .3s}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="gul" viewBox="-50 -50 100 100"><circle r="47"/><circle r="38" stroke-dasharray="1 5"/><circle r="8"/><g id="pp"><ellipse cy="-24" rx="7" ry="13"/><path d="M0-37V-45"/></g><use href="#pp" transform="rotate(45)"/><use href="#pp" transform="rotate(90)"/><use href="#pp" transform="rotate(135)"/><use href="#pp" transform="rotate(180)"/><use href="#pp" transform="rotate(225)"/><use href="#pp" transform="rotate(270)"/><use href="#pp" transform="rotate(315)"/></symbol>
@@ -386,13 +394,13 @@ body.i3d .intro{display:flex;flex-direction:column;align-items:center;justify-co
 <div class="gl mx rv ctr"><div id="qz"></div></div>
 <p class="sorry rv">Biz bir-birimizni tinglashni yaxshi koʻrardik-ku. Yana shunday boʻlishini xohlayman.</p></div></section>
 <section class="pg" id="p-kechirim"><div class="wrap"><div class="sec lt mx"><div class="band"></div><h2 class="rv">Aytadigan gapim</h2><p class="lead rv">Chiroyli gap topolmadim, shuning uchun oddiy yozaman.</p>
-<h3 class="rv">Nima boʻlgan edi</h3><p class="rv">Rasmlar haqida bahslashganimizda tez jahlim chiqdi va qoʻpol gapirdim. Sen nima demoqchi boʻlganingdan qat’i nazar, men ovozimni koʻtarmasligim kerak edi.</p>
+<h3 class="rv">Nima boʻlgan edi</h3><p class="rv">Rasmlar haqida bahslashganimizda tez jahlim chiqdi va qoʻpol gapirdim. Sen nima demoqchi boʻlganingdan qatʼi nazar, men ovozimni koʻtarmasligim kerak edi.</p>
 <h3 class="rv">Xato mendan edi</h3><p class="rv">Hech qanday bahona yoʻq. Buni sening zimmangga yuklamoqchi emasman.</p>
 <h3 class="rv">Jim qolganim</h3><p class="rv">Keyin oylab yozmadim. Chunki oʻshanda faqat sen aybdordek tuyulgan edi. Hozir tushunyapman: jim qolish ham ogʻritadi, ayniqsa yaxshi koʻrgan odamingni. Bu mening ikkinchi xatom edi.</p>
 <h3 class="rv">Endi nima qilaman</h3><p class="rv">Janjal boʻlsa, oʻzimni bosib, tinch gaplashishni oʻrganaman. Qochib ketmayman, ochiq gaplashib, oxirigacha hal qilamiz. Avval seni tinglayman, keyin oʻzim gapiraman.</p>
 <h3 class="rv">Senga aytmoqchi boʻlganim</h3><p class="rv">Sendan hech narsa talab qilmayman. Faqat gapimni eshitgin va menga yana bir imkon bergin. Men uchun shuning oʻzi katta narsa.</p>
 <div class="big rv">Meni kechir, Nozik.</div></div></div></section>
-<section class="pg" id="p-vada"><div class="wrap"><div class="sec rv"><div class="band"></div><h2>Va’dalarim</h2><p class="lead">Katta gaplar emas, oddiy narsalar.</p></div>
+<section class="pg" id="p-vada"><div class="wrap"><div class="sec rv"><div class="band"></div><h2>Vaʼdalarim</h2><p class="lead">Katta gaplar emas, oddiy narsalar.</p></div>
 <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))"><div class="gl rv"><h3>Tinchlik</h3><p>Janjalda tinch boʻlaman, ovozimni koʻtarmayman.</p></div><div class="gl rv" style="--d:1"><h3>Ochiqlik</h3><p>Jim qolib ketmayman. Muammo boʻlsa, ochiq gaplashib, oxirigacha hal qilamiz.</p></div><div class="gl rv" style="--d:2"><h3>Tinglash</h3><p>Avval seni tinglayman, keyin javob beraman.</p></div></div>
 <div class="gl mx rv ctr" style="margin-top:44px"><h2>Ovozingni eshitgim keladi</h2><p>Xohlasang, Telegram’da yoz yoki qoʻngʻiroq qil.</p><div><a class="b" id="wa" href="https://t.me/ffarxod" target="_blank" rel="noopener">Telegram’da yozish</a> <button class="b g" id="wtb">Menga biroz vaqt kerak</button></div><p id="wt" class="sorry" hidden>Tushunaman. Shoshilma, men shu yerdaman.</p><p class="mut" style="margin-top:18px">Farkhod</p></div></div></section>
 <section class="pg" id="p-feedback"><div class="wrap"><div class="sec rv"><div class="band"></div><h2>Fikring</h2><p class="lead">Sayt haqida nima deb oʻylaysan? Shu yerga yoz, xabaring toʻgʻri menga keladi. Nima yoqdi, nima yoqmadi, hammasi men uchun qiziq.</p></div>
@@ -416,7 +424,7 @@ body.i3d .intro{display:flex;flex-direction:column;align-items:center;justify-co
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],pgs=$$('.pg'),N=pgs.length,NM=8;
-const R=['bosh','dunyo','xotira','oyinlar','tanqid','test','kechirim','vada','feedback','contact'],ST=['Bosh','Sevimlilaring','Xotiralar','Oʻyinlar','Tanqid','Test','Kechirim','Va’dalarim','Fikring','Aloqa'],GW=['Nozik','Dunyo','Xotira','Oʻyin','Tanqid','Biz','Kechir','Va’da','Fikr','Aloqa'];
+const R=['bosh','dunyo','xotira','oyinlar','tanqid','test','kechirim','vada','feedback','contact'],ST=['Bosh','Sevimlilaring','Xotiralar','Oʻyinlar','Tanqid','Test','Kechirim','Vaʼdalarim','Fikring','Aloqa'],GW=['Nozik','Dunyo','Xotira','Oʻyin','Tanqid','Biz','Kechir','Vaʼda','Fikr','Aloqa'];
 let cur=0,di=0,base=.5,qi=0,ct=0,off=0,bump=0,started=0,st=0;
 const M=[[.55,18000],[.5,16000],[.42,6000],[.65,18000],[.45,8000],[.5,12000],[.3,1500],[.7,18000],[.5,16000],[.5,16000]];
 function scene(){
@@ -494,7 +502,7 @@ const FV=[
 {e:'📺',n:'Yalı Çapkını',p:'Esingdami, bu serialni shunaqa yaxshi koʻrardingki, baʼzan uni deb men bilan yozishmay qoʻyarding. Bu esa rosa jahlimni chiqarardi.',k:'Serial',l:'Turkiya, Star TV, 2022–2025',t:'Ferit — boy oilaning sarkash oʻgʻli. Bobosi Halis Ogʻa uni Gaziantepdagi yaqin oilaning qizi Seyranga uylantirishga qaror qiladi. Majburiy nikoh, oilaviy sirlar va sekin-asta paydo boʻladigan muhabbat.',f:['Bosh rollarda: Afra Saraçoğlu (Seyran) va Mert Ramazan Demir (Ferit).','Inglizchada “The Golden Boy” va “Kingfisher” deb ham atalgan.','2022-yil sentabrda boshlanib, uch fasldan keyin 2025-yil aprelda tugagan.'],a:[['Serial haqida (TVmaze)','https://www.tvmaze.com/shows/64071/yali-capkini'],['Barcha fragmanlar (YouTube, Star TV)','https://www.youtube.com/playlist?list=PL3qZLHWaEvNn9akYs0hHEPdMSqFyvZbTG']]},
 {e:'🎤',n:'Olivia Rodrigo',k:'Qoʻshiqchi',l:'AQSH, pop va rok',t:'Sen eng koʻp tinglaydigan qoʻshiqchilardan biri. “deja vu” ham, “traitor” ham 2021-yilda chiqqan “SOUR” albomidan.',f:['Ikkinchi albomi “GUTS” 2023-yilda chiqqan.','“drivers license” 2021-yil yanvarida chiqqan.','Qoʻshiq matnlarini oʻzi ham yozadi.'],a:[['Spotify: Olivia Rodrigo',sp('Olivia Rodrigo')],['Spotify: deja vu',sp('Olivia Rodrigo deja vu')],['Spotify: traitor',sp('Olivia Rodrigo traitor')]]},
 {e:'🎶',n:'KATSEYE',p:'Spotify’da nima eshitishingga qarab, kayfiyating qanaqaligini bilib olyapmane, urushganimizdan beri. Seni shunday kuzatyapman, qadrimga yeting, opa.',k:'Guruh',l:'HYBE x Geffen Records',t:'“Animal” — KATSEYE’ning 2026-yil 24-iyulda chiqqan qoʻshigʻi. Uni yozishda Ed Sheeran ham qatnashgan. Guruh “Dream Academy” degan realiti-shou orqali tuzilgan.',f:['“Animal” guruhning “WILD” EP’sidan (14-avgust).','Billboard Hot 100 roʻyxatiga 24-oʻrindan kirgan.','Guruh “Gnarly” va “Gabriela” bilan ham tanilgan.'],a:[['Spotify: Animal',sp('KATSEYE Animal')],['Spotify: KATSEYE',sp('KATSEYE')]]},
-{e:'💗',n:'Jennie va Lisa',k:'BLACKPINK',l:'K-pop, Janubiy Koreya',t:'Ikkalasi ham BLACKPINK a’zosi, yakka karyerasi ham bor. Sen ikkalasini ham yoqtirasan.',f:['BLACKPINK 2016-yilda YG Entertainment ostida debyut qilgan.','Lisa tailandlik, haqiqiy ismi Lalisa Manobal.','Jennie — Jennie Kim, guruhning vokalchisi va repchisi.'],a:[['Spotify: Jennie',sp('Jennie')],['Spotify: Lisa',sp('Lisa')],['Spotify: BLACKPINK',sp('BLACKPINK')]]},
+{e:'💗',n:'Jennie va Lisa',k:'BLACKPINK',l:'K-pop, Janubiy Koreya',t:'Ikkalasi ham BLACKPINK aʼzosi, yakka karyerasi ham bor. Sen ikkalasini ham yoqtirasan.',f:['BLACKPINK 2016-yilda YG Entertainment ostida debyut qilgan.','Lisa tailandlik, haqiqiy ismi Lalisa Manobal.','Jennie — Jennie Kim, guruhning vokalchisi va repchisi.'],a:[['Spotify: Jennie',sp('Jennie')],['Spotify: Lisa',sp('Lisa')],['Spotify: BLACKPINK',sp('BLACKPINK')]]},
 {e:'🍜',n:'Laghman',p:'Qovurilgan lagʻmon qiberishni kutyapman, qoʻzim.',k:'Taom',l:'Uyghur laghman',t:'Sening sevimli taoming. Xamirni qoʻlda choʻzishadi, ustiga sabzavot va goʻshtli qovurma solinadi. Uyghur oshxonasidan Oʻrta Osiyoga, Oʻzbekistonga ham tarqalgan.',f:['Xamir qoʻlda choʻzilib, ingichka iplarga aylanadi.','Suyuq (sho‘rvali) va qovurma turlari bor.','“Lagʻmon” nomi xitoycha “choʻzilgan lapsha” iborasiga borib taqaladi, deyishadi.'],a:[['Uyghur laghman retsepti (YouTube)','https://www.youtube.com/watch?v=jpKNOboAjuk']]},
 {e:'🍫',n:'Kit Kat',k:'Shokolad',l:'Nestlé',t:'Sen yoqtiradigan shokolad: vafli ustidan shokolad bilan qoplangan, uzib-uzib yeyiladi.',f:['1935-yilda Angliyada Rowntree’s “Chocolate Crisp” nomi bilan chiqargan, 1937-yilda nomi “Kit Kat” boʻlgan.','Hozir uni Nestlé ishlab chiqaradi (AQShda Hershey).','Yaponiyada juda koʻp xil mazalari bor.'],a:[['Tarixi (Wikipedia)','https://en.wikipedia.org/wiki/Kit_Kat']]},
 {e:'🧃',n:'Fuse Tea',p:'Korzinkadan olingan snack bilan Fuse Tea qachon ichamiz?',k:'Ichimlik',l:'Muzlatilgan choy',t:'Sening ichimliging. Coca-Cola’ning muzlatilgan choyi, yozda ayniqsa mos tushadi.',f:['Mazalari koʻp, masalan shaftoli va limon.','Muzdek ichilsa eng yaxshi.'],a:[]},
@@ -569,7 +577,7 @@ $('#pl').innerHTML=[['Olivia Rodrigo, deja vu',sp('Olivia Rodrigo deja vu')],['O
 pgs.forEach((p,k)=>{const w=p.firstElementChild,u=k>=NM,pv=(k+NM-1)%NM,nx=(k+1)%NM;w.insertAdjacentHTML('beforeend',`<footer class="fb"><div class="fnav">${u?'<button data-go="0">‹ Bosh sahifa</button>':`<button data-go="${pv}">‹ ${ST[pv]}</button><button data-go="${nx}">${ST[nx]} ›</button>`}</div><div class="fsig"><svg class="fcr" viewBox="0 0 120 122" aria-hidden="true"><use href="#crest"/></svg><span>Farkhod · Nozik uchun</span></div><div class="flk"><button data-go="8">Fikring</button><button data-go="9">Aloqa</button></div></footer>`)});
 $$('.rv').forEach(e=>io.observe(e));$$('.htxt').forEach(p=>[...p.children].forEach((c,i)=>c.style.setProperty('--k',i)));
 const lk=i=>`<button class="lk" data-i="${i}" data-go="${i}" style="--i:${i}">${ST[i]}</button>`;
-$('#links').innerHTML=[...Array(NM).keys()].map(lk).join('');$('#dl').innerHTML=[...Array(NM).keys()].map(lk).join('');
+$('#links').innerHTML=[...Array(NM).keys()].map(lk).join('');$('#dl').innerHTML=[...Array(N).keys()].map(lk).join('');
 function openD(i){di=(i+FV.length)%FV.length;const f=FV[di];$('#dc').innerHTML=`<div class="dh">${phI(f,'de')}<div><span class="tg">${f.k}</span><h2>${f.n}</h2><p class="lead">${f.l}</p></div></div>${f.p?`<div class="pn"><small>Farkhoddan</small><p>${f.p}</p></div>`:''}<div class="dg gl"><div><h3>Haqida</h3><p>${f.t}</p></div><div><h3>Qiziq faktlar</h3><ul class="fa">${f.f.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>${f.a.length?`<div class="dl">${f.a.map(l=>`<a class="b" target="_blank" rel="noopener" href="${l[1]}">${l[0]}</a>`).join('')}</div>`:''}`;if(PH[f.n])$('#dc').querySelector('.dg').insertAdjacentHTML('beforeend',`<small class="pcr">Rasm: <a href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent(PH[f.n][0])}" target="_blank" rel="noopener">Wikimedia Commons</a></small>`);
 $('#det').classList.add('on');$('#det').scrollTop=0;mood(.28,2500);F.burst(40)}
 function closeD(s){if(!$('#det').classList.contains('on'))return;$('#det').classList.remove('on');if(!s)mood(...M[cur])}
@@ -578,7 +586,7 @@ document.addEventListener('click',e=>{const fy=e.target.closest('[data-fly]');if
 $('.brand').onclick=()=>go(0);
 $('#burger').onclick=()=>{const o=document.body.classList.toggle('mo');$('#burger').setAttribute('aria-expanded',o)};$('#scrim').onclick=()=>document.body.classList.remove('mo');
 addEventListener('keydown',e=>{if(e.key=='Escape'){document.body.classList.remove('mo');closeD()}});
-function shrink(){$('#nav').classList.toggle('sm',pgs[cur].scrollTop>20)}
+function shrink(){$('#nav').classList.toggle('sm',pgs[cur].scrollTop>20);document.body.classList.toggle('flfull',cur===0&&pgs[0].scrollTop<innerHeight*.5)}
 
 let flying=0,fnT=0;
 function fnm(i){const e=$('#fname');if(!e)return;e.classList.remove('on');clearTimeout(fnT);fnT=setTimeout(()=>{e.textContent=F.names[i]||'';if(F.names[i])e.classList.add('on')},500)}
@@ -635,28 +643,28 @@ if(k==12){mk(L,'line',{x1:p[0],y1:p[1],x2:Pt[0][0],y2:Pt[0][1],class:'ln'});Hf.s
 g.onclick=hit;g.onkeydown=e=>{if(e.key=='Enter'||e.key==' ')hit()}})}
 csInit();$('#cb').onclick=csInit;
 const nz=s=>s.toLowerCase().replace(/[ʻʼ‘’`´]/g,"'"),CH=$('#chat'),CL=$('#cl');let hist=[],smp,busy=0;
-const J=['Mushuk kompyuter yonida nima qiladi? Sichqonchani poylaydi!','Kit Kat nega hech qachon yolgʻiz qolmaydi? Doim 4 ta doʻsti bor','Ayiqchadan “Eng sevimli taoming qaysi?” deb soʻrashibdi. U “Laghman, uni cheksiz choʻzsa boʻladi!” debdi'];
-const SYS='Sen Nozik uchun yasalgan saytdagi kichkina pushti ayiqchasan. Gaplashayotgan odam — Nozik; saytni unga atab Farkhod yasagan. Oʻzbekcha (lotin yozuvi), oddiy gapirish tilida, iliq va biroz hazilkash boʻl. 2-3 qisqa gap yoz; rasmiy, quruq yoki robotdek gapirma; emojini kam ishlat. Nozik boshqa tilda yozsa, oʻsha tilda javob ber. Sen Farkhod emassan, uning nomidan gapirma va soʻz berma. Kechirim xati “Kechirim” sahifasida, u bilan gaplashish uchun “Va’dalarim” va “Aloqa” sahifalarida Telegram tugmasi bor: buni faqat soʻralganda yoki juda mos kelganda, bosimsiz eslat. Nozikni hech narsaga majburlama va kechirishga undama; uning his-tuygʻulari muhim. Nozikning sevimlilari: Uyghur laghman, Kit Kat, Fuse Tea, mushuklar, yoz, Olivia Rodrigo, KATSEYE, Jennie va Lisa, “Raqamli qala” kitobi, Yalı Çapkını serialı, oshpazlik va kinolar. Hazil ayta olasan, iqtibos keltira olasan, qoʻshiq va kitoblar haqida gaplasha olasan, saytda yoʻl koʻrsata olasan (goto_page), raqsga tushishing mumkin (bear_dance), sevimli narsa sahifasini ocha olasan (open_favourite). Aniq bilmagan faktlarni oʻylab topma. Sen sunʼiy intellektsan; soʻralsa, buni halol ayt.';
+const J=['Mushuk kompyuter yonida nima qiladi? Sichqonchani poylaydi!','Kit Kat nega hech qachon yolgʻiz qolmaydi? Doim 4 ta doʻsti bor.','Ayiqchadan “Eng sevimli taoming qaysi?” deb soʻrashibdi. U “Laghman, uni cheksiz choʻzsa boʻladi!” debdi.'];
+const SYS='Sen Nozik uchun yasalgan saytdagi kichkina pushti ayiqchasan. Gaplashayotgan odam — Nozik; saytni unga atab Farkhod yasagan. Oʻzbekcha (lotin yozuvi), oddiy gapirish tilida, iliq va biroz hazilkash boʻl. 2-3 qisqa gap yoz; rasmiy, quruq yoki robotdek gapirma; emojini kam ishlat. Nozik boshqa tilda yozsa, oʻsha tilda javob ber. Sen Farkhod emassan, uning nomidan gapirma va soʻz berma. Kechirim xati “Kechirim” sahifasida, u bilan gaplashish uchun “Vaʼdalarim” va “Aloqa” sahifalarida Telegram tugmasi bor: buni faqat soʻralganda yoki juda mos kelganda, bosimsiz eslat. Nozikni hech narsaga majburlama va kechirishga undama; uning his-tuygʻulari muhim. Nozikning sevimlilari: Uyghur laghman, Kit Kat, Fuse Tea, mushuklar, yoz, Olivia Rodrigo, KATSEYE, Jennie va Lisa, “Raqamli qala” kitobi, Yalı Çapkını serialı, oshpazlik va kinolar. Hazil ayta olasan, iqtibos keltira olasan, qoʻshiq va kitoblar haqida gaplasha olasan, saytda yoʻl koʻrsata olasan (goto_page), raqsga tushishing mumkin (bear_dance), sevimli narsa sahifasini ocha olasan (open_favourite). Aniq bilmagan faktlarni oʻylab topma. Sen sunʼiy intellektsan; soʻralsa, buni halol ayt.';
 function addMsg(t,c,raw){const d=document.createElement('div');d.className='m '+c;if(raw)d.innerHTML=t;else d.textContent=t;CL.append(d);CL.scrollTop=CL.scrollHeight;return d}
 const lin=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/(https?:\/\/[^\s)]+)/g,'<a href="$1" target="_blank" rel="noopener">havola</a>');
-function openChat(){CH.classList.add('on');if(!CL.children.length)addMsg('Salom, Nozik! Men ayiqchaman Hazil aytaman, gaplashaman, sahifalarni koʻrsataman. Nima desang, tayyorman.','a');setTimeout(()=>$('#ci').focus(),400)}
+function openChat(){CH.classList.add('on');if(!CL.children.length)addMsg('Salom, Nozik! Men ayiqchaman. Hazil aytaman, gaplashaman, sahifalarni koʻrsataman. Nima desang, tayyorman.','a');setTimeout(()=>$('#ci').focus(),400)}
 function local(s){const t=nz(s),h=(...w)=>w.some(x=>t.includes(x));
 if(h('salom','assalom','hello','hey'))return 'Salom, Nozik! Bugun kayfiyating qanday?';
 if(h('hazil','joke','kulgi'))return J[Math.random()*J.length|0];
 if(h('iqtibos','maslahat','motivats','quote','bir gap'))return(q=>'“'+q[0]+'”\n— '+q[1])(Q[Math.random()*Q.length|0]);
-if(h("qo'shiq",'musiqa','spotify','song','olivia','katseye','jennie','lisa'))return 'Olivia, KATSEYE, Jennie, Lisa... playlisting zoʻr-ku “Animal”ni Spotify’dan qidirib berdim: '+sp('KATSEYE Animal');
+if(h("qo'shiq",'musiqa','spotify','song','olivia','katseye','jennie','lisa'))return 'Olivia, KATSEYE, Jennie, Lisa... playlisting zoʻr-ku. Mana, “Animal” Spotify’da: '+sp('KATSEYE Animal');
 if(h('mushuk','cat'))return 'Mushuk haqida bitta gap: '+FV[8].f[Math.random()*3|0];
 if(h('kitob','raqamli','dan brown')){openD(0);return 'Mana, kitobing'}
 if(h('serial','yali')){openD(1);return 'Mana, serialing'}
 if(h('laghman','lagmon','taom')){openD(5);return 'Laghman, albatta'}
-if(h('kit kat','shokolad')){openD(6);return 'Kit Kat Menda ham xohish paydo boʻldi'}
+if(h('kit kat','shokolad')){openD(6);return 'Kit Kat! Menda ham xohish paydo boʻldi'}
 if(h("o'yin",'game')){go(3);return 'Yur, oʻynaymiz'}
 if(h('shar')){go(3);gp('sh');return 'Sharlarni yorib koʻr'}
 if(h('yulduz')){go(3);gp('st');return 'Yulduzlarni ulab koʻr'}
 if(h('kechir','xat','farkhod')){go(6);return 'Kechirim sahifasini ochdim. Shoshilma, oʻqishga vaqting bor'}
 if(h('rahmat','thanks'))return 'Arzimaydi!';
-if(h('kim','nima qila'))return 'Men shu saytdagi kichkina ayiqcha-chatbotman Hazil aytaman, sahifalarni koʻrsataman, shunchaki gaplashaman. Hozir oddiy rejimdaman.';
-return 'Buni tushunmadim Hazil, qoʻshiq, mushuklar yoki oʻyin haqida gaplashsak-chi?'}
+if(h('kim','nima qila'))return 'Men shu saytdagi kichkina ayiqcha-chatbotman. Hazil aytaman, sahifalarni koʻrsataman, shunchaki gaplashaman. Hozir oddiy rejimdaman.';
+return 'Buni tushunmadim. Hazil, qoʻshiq, mushuklar yoki oʻyin haqida gaplashsak-chi?'}
 async function ask(txt){if(busy)return;busy=1;addMsg(txt,'u');hist.push({role:'user',content:txt});const el=addMsg('<span class="dots"><i></i><i></i><i></i></span>','a',1);let s=null;
 try{if(smp===undefined)smp=await claude.use('sample');s=smp}catch(e){smp=null}
 if(s){try{const r=await s([{role:'user',content:SYS},{role:'assistant',content:'Tushundim.'},...hist.slice(-12)],{cache:false,modelTier:'quick',onText:({text})=>{el.textContent=text;CL.scrollTop=CL.scrollHeight},tools:[
