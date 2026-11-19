@@ -50,6 +50,8 @@ All texts are in `site/index.html`:
 | Memories timeline | `id="p-xotira"` |
 | The letter | `id="p-kechirim"` |
 | Promises and contact | `id="p-vada"`, `id="p-contact"` |
+| "Together since" counter (home page) | `class="since"` for the label; the start date is `Date.UTC(2022,8,19)` (months count from 0, Tashkent time) |
+| Reply to the letter: thank-you texts | `const MSG=` (the answer buttons are in `id="reply"`; the same answers are listed in `CHOICES` in `netlify/functions/feedback.mjs`) |
 | Photos for favourites | `const PH=` (Wikimedia Commons file names) |
 
 ## Moderating Tanqid

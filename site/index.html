@@ -407,6 +407,24 @@ body.rd #rp{opacity:1}
 
 /* flower name: stays on the opening screen, fades away behind the text elsewhere */
 body:not(.flfull) #fname.on:not(.fnt){opacity:0}
+
+/* together-since counter: light, typographic, no box */
+.since{text-align:center;width:fit-content;max-width:100%;box-sizing:border-box;margin:6px auto 52px;padding:16px clamp(12px,4vw,30px) 14px;border-radius:26px;background:var(--glass);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.since .sl{margin:0 0 12px;font:italic 500 clamp(18px,2.2vw,21px)/1.3 'Cormorant Garamond',Georgia,serif;color:var(--goldt)}
+.sc{display:flex;justify-content:center;gap:clamp(8px,3.2vw,30px)}
+.sc span{display:flex;flex-direction:column;align-items:center;min-width:clamp(40px,11vw,62px)}
+.sc b{font:700 clamp(28px,7.4vw,46px)/1 'Cormorant Garamond',Georgia,serif;color:var(--hd);font-variant-numeric:lining-nums tabular-nums}
+.sc i{margin-top:7px;font:600 10.5px/1 Manrope,sans-serif;font-style:normal;letter-spacing:.09em;text-transform:uppercase;color:var(--mut)}
+/* reply to the letter */
+.reply{margin-top:8px}
+.reply .gl{text-align:center}
+.reply h3{font-size:clamp(28px,4vw,36px);margin-bottom:.2em}
+.rch{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:14px 0 4px}
+.rch .b{margin:0;padding:11px 18px;font-size:15px}
+.rch .b[aria-pressed="true"]{background:linear-gradient(135deg,#f283a6,#c43d6a);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(196,61,106,.3)}
+.reply .crt{max-width:520px;margin:14px auto 4px;text-align:left}
+#rsend:disabled{cursor:default}
+.rdone .sorry{border:0;margin:6px 0 6px;font-size:22px}
 </style></head><body>
 <script>try{var c=document.createElement("canvas");if(c.getContext("webgl")||c.getContext("experimental-webgl"))document.body.classList.add("i3d")}catch(e){}</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -426,6 +444,7 @@ body:not(.flfull) #fname.on:not(.fnt){opacity:0}
 <p>Ancha vaqt boʻldi, gaplashmadik. Nima desam ekan, qanday boshlasam ekan deb koʻp oʻyladim. Oxiri shu sahifani yasadim.</p>
 <p class="mut">Hammasini shu yerga yozdim. Shoshilma, ohista koʻrib chiq.</p>
 <div><button class="b" data-go="1">Ochib koʻr</button></div></div></div>
+<div class="since rv" role="group" aria-label="19-sentabr, 2022-yildan beri birgamiz"><p class="sl">19-sentabr, 2022-yildan beri birgamiz</p><div class="sc" aria-hidden="true"><span><b data-u="y">0</b><i>yil</i></span><span><b data-u="mo">0</b><i>oy</i></span><span><b data-u="d">0</b><i>kun</i></span><span><b data-u="h">0</b><i>soat</i></span><span><b data-u="mi">0</b><i>daqiqa</i></span><span><b data-u="s">0</b><i>soniya</i></span></div></div>
 <div class="sec rv"><div class="gl mx"><div><div class="band"></div><h2>Nega shu sahifa?</h2><p>Oʻzimcha oʻylab yurganim bilan boʻlmasdi. Shuning uchun senga yoqadigan narsalarni, bizning xotiralarimizni va oxirida aytmoqchi boʻlgan gapimni shu yerga yigʻdim.</p><p>Oxirigacha koʻrsang, xursand boʻlaman. Har sahifaning pastida kichkina bir uzr ham bor.</p></div></div></div>
 <div class="sec leaves"><h2 class="rv">Ichida nimalar bor</h2><p class="lead rv">Bittasini bos: barg uchib, seni oʻsha sahifaga olib boradi.</p><div id="hg"></div></div>
 <p class="sorry rv">Avval shuni aytib qoʻyay: seni xafa qilganim uchun juda afsusdaman.</p></div></section>
@@ -460,7 +479,8 @@ body:not(.flfull) #fname.on:not(.fnt){opacity:0}
 <h3 class="rv">Jim qolganim</h3><p class="rv">Keyin oylab yozmadim. Chunki oʻshanda faqat sen aybdordek tuyulgan edi. Hozir tushunyapman: jim qolish ham ogʻritadi, ayniqsa yaxshi koʻrgan odamingni. Bu mening ikkinchi xatom edi.</p>
 <h3 class="rv">Endi nima qilaman</h3><p class="rv">Janjal boʻlsa, oʻzimni bosib, tinch gaplashishni oʻrganaman. Qochib ketmayman, ochiq gaplashib, oxirigacha hal qilamiz. Avval seni tinglayman, keyin oʻzim gapiraman.</p>
 <h3 class="rv">Senga aytmoqchi boʻlganim</h3><p class="rv">Sendan hech narsa talab qilmayman. Faqat gapimni eshitgin va menga yana bir imkon bergin. Men uchun shuning oʻzi katta narsa.</p>
-<div class="big rv">Meni kechir, Nozik.</div></div></div></section>
+<div class="big rv">Meni kechir, Nozik.</div></div>
+<div class="sec mx reply rv" id="reply"><div class="gl"><div class="band"></div><h3>Javobing</h3><p class="mut">Xohlasang, shu yerdan javob ber. Javobing faqat Farkhodga boradi, boshqa hech kim koʻrmaydi.</p><div class="rf"><div class="rch" role="group" aria-label="Javobing"><button class="b g" type="button" aria-pressed="false" data-r="Kechirdim">Kechirdim</button><button class="b g" type="button" aria-pressed="false" data-r="Gaplashaylik">Gaplashaylik</button><button class="b g" type="button" aria-pressed="false" data-r="Menga vaqt kerak">Menga vaqt kerak</button><button class="b g" type="button" aria-pressed="false" data-r="Hali bilmayman">Hali bilmayman</button></div><textarea id="rtx" class="crt" rows="3" maxlength="1000" placeholder="Yana nimadir qoʻshmoqchimisan? (shart emas)" aria-label="Qoʻshimcha soʻz"></textarea><div class="ctr"><button class="b" id="rsend" type="button" disabled>Javobni yuborish</button></div></div><div class="rdone" hidden><p class="sorry" id="rmsg"></p><div class="ctr" id="rtg" hidden><a class="b" href="https://t.me/ffarxod" target="_blank" rel="noopener">Telegram’da yozish</a></div><button class="skip" type="button" id="ragain">Boshqa javob yuborish</button></div><p class="mut ctr" id="rst" aria-live="polite"></p></div></div></div></section>
 <section class="pg" id="p-vada"><div class="wrap"><div class="sec rv"><div class="band"></div><h2>Vaʼdalarim</h2><p class="lead">Katta gaplar emas, oddiy narsalar.</p></div>
 <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))"><div class="gl rv"><h3>Tinchlik</h3><p>Janjalda tinch boʻlaman, ovozimni koʻtarmayman.</p></div><div class="gl rv" style="--d:1"><h3>Ochiqlik</h3><p>Jim qolib ketmayman. Muammo boʻlsa, ochiq gaplashib, oxirigacha hal qilamiz.</p></div><div class="gl rv" style="--d:2"><h3>Tinglash</h3><p>Avval seni tinglayman, keyin javob beraman.</p></div></div>
 <div class="gl mx rv ctr" style="margin-top:44px"><h2>Ovozingni eshitgim keladi</h2><p>Xohlasang, Telegram’da yoz yoki qoʻngʻiroq qil.</p><div><a class="b" id="wa" href="https://t.me/ffarxod" target="_blank" rel="noopener">Telegram’da yozish</a> <button class="b g" id="wtb">Menga biroz vaqt kerak</button></div><p id="wt" class="sorry" hidden>Tushunaman. Shoshilma, men shu yerdaman.</p><p class="mut" style="margin-top:18px">Farkhod</p></div></div></section>
@@ -681,6 +701,24 @@ shrink();off=0;const g=$('#ghost');g.style.opacity=0;setTimeout(()=>{g.textConte
 if(fx!='globe'){F.setFlower(i);F.burst(50);fnm(i)}if(R[i]=='tanqid'&&window.critLoad)critLoad();mood(...M[i]);if(window._qB){clearTimeout(window._qT);window._qT=setTimeout(()=>card(...Q[1+qi++%(Q.length-1)]),1500)}window._qB=1;document.body.classList.toggle('rd',R[i]==='kechirim');$('#rp').style.setProperty('--p',0);if(!nh)location.hash=R[i]}
 function route(){const [pg,d]=location.hash.slice(1).split('/'),i=R.indexOf(pg);if(i<0)return;if(i!=cur)go(i,1);if(i===1&&d!==undefined&&FV[+d]){if(!($('#det').classList.contains('on')&&di===+d))openD(+d,'none')}else if($('#det').classList.contains('on'))closeD()}
 addEventListener('hashchange',route);
+(function(){const S=Date.UTC(2022,8,19)-5*36e5,el={};$$('.sc b').forEach(b=>el[b.dataset.u]=b);
+function diff(now){const T=new Date(now+5*36e5);let y=T.getUTCFullYear()-2022,mo=T.getUTCMonth()-8,d=T.getUTCDate()-19;
+if(d<0){mo--;d+=new Date(Date.UTC(T.getUTCFullYear(),T.getUTCMonth(),0)).getUTCDate()}if(mo<0){y--;mo+=12}
+return{y,mo,d,h:T.getUTCHours(),mi:T.getUTCMinutes(),s:T.getUTCSeconds()}}
+let seen=true;const box=$('.since');if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>seen=e.isIntersecting)).observe(box);
+function tick(force){if(!force&&(R[cur]!=='bosh'||document.hidden||!seen))return;const v=diff(Math.max(Date.now(),S));for(const k in el){const t=k==='y'||k==='mo'||k==='d'?String(v[k]):String(v[k]).padStart(2,'0');if(el[k].textContent!==t)el[k].textContent=t}}
+tick(1);setInterval(tick,1000);document.addEventListener('visibilitychange',()=>tick())})();
+(function(){const box=$('#reply'),chips=[...box.querySelectorAll('[data-r]')],send=$('#rsend'),st=$('#rst'),tx=$('#rtx');let pick='';
+const MSG={'Kechirdim':'Rahmat, Nozik. Bu men uchun juda katta narsa.','Gaplashaylik':'Rahmat. Xohlagan paytingda yoz, men kutaman.','Menga vaqt kerak':'Tushunaman. Shoshilma, men shu yerdaman.','Hali bilmayman':'Tushunaman. Qaror qilishga shoshilma.'};
+const LS2={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+function done(c){box.querySelector('.rf').hidden=true;box.querySelector('.rdone').hidden=false;$('#rmsg').textContent=MSG[c]||'';$('#rtg').hidden=c!=='Gaplashaylik';st.textContent=''}
+chips.forEach(b=>b.onclick=()=>{pick=b.dataset.r;chips.forEach(x=>x.setAttribute('aria-pressed',x===b));send.disabled=false});
+send.onclick=async()=>{if(!pick)return;send.disabled=true;st.textContent='Yuborilmoqda…';
+try{const r=await fetch('/api/feedback',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({kind:'javob',choice:pick,name:'Nozik',message:tx.value.trim()})}),d=await r.json().catch(()=>({}));if(!r.ok||!d.ok)throw 0;
+LS2.set('javob',{c:pick,ts:Date.now()});tx.value='';done(pick);F.burst(90)}catch(e){st.textContent='Yuborib boʻlmadi. Internetni tekshirib, qayta urinib koʻr.';send.disabled=false}};
+$('#ragain').onclick=()=>{box.querySelector('.rdone').hidden=true;box.querySelector('.rf').hidden=false;pick='';chips.forEach(x=>x.setAttribute('aria-pressed','false'));send.disabled=true};
+const prev=LS2.get('javob');if(prev&&MSG[prev.c])done(prev.c)})();
+
 {const big=$('#p-kechirim .big');let done=0;if(big&&'IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!done&&R[cur]==='kechirim'){done=1;setTimeout(()=>{F.burst(220);forceDance('disco');card(Q[0][0],Q[0][1])},700)}}),{threshold:.9}).observe(big)}
 let stp=0;$('#gb').onclick=()=>{const a=$('#arena');let n=0,t=0;a.innerHTML='';$('#cnt').textContent=0;$('#gm').textContent='';$('#gb').disabled=true;const E=[['Kit Kat','🍫'],['Laghman','🍜'],['Mushuklar','🐱'],['Fuse Tea','🧃'],['Yoz','☀️'],['Oshpazlik va kinolar','🍳'],[0,'🌸']];
 const iv=setInterval(()=>{if(++t>40){clearInterval(iv);setTimeout(()=>{$('#gb').disabled=false;$('#gb').textContent='Yana oʻynaymizmi?';$('#gm').textContent='Zoʻr, '+n+' ta tutding!';F.burst(120)},3600);return}

@@ -6,17 +6,25 @@ import { randomUUID } from "node:crypto";
 import { json, clean, readJson } from "../lib/http.mjs";
 import { notify } from "../lib/telegram.mjs";
 
+// Answers Nozik can give at the end of the letter (kind: "javob").
+const CHOICES = ["Kechirdim", "Gaplashaylik", "Menga vaqt kerak", "Hali bilmayman"];
+
+const when = (ts) => new Date(ts).toLocaleString("uz-UZ", { timeZone: "Asia/Tashkent" });
 const format = (f) =>
-  `💌 Nozik uchun sayti: yangi fikr\nKimdan: ${f.name || "ismsiz"}\nVaqt: ${new Date(f.ts).toLocaleString("uz-UZ", { timeZone: "Asia/Tashkent" })}\n\n${f.message}`;
+  f.kind === "javob"
+    ? `💌 Kechirim xatiga javob\nJavob: ${f.choice}\nVaqt: ${when(f.ts)}${f.message ? `\n\n${f.message}` : ""}`
+    : `💌 Nozik uchun sayti: yangi fikr\nKimdan: ${f.name || "ismsiz"}\nVaqt: ${when(f.ts)}\n\n${f.message}`;
 
 export default async (req) => {
   if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
   const body = await readJson(req);
   const message = clean(body?.message, 2000);
-  if (!message) return json({ error: "empty" }, 400);
+  const isReply = body?.kind === "javob";
+  const choice = isReply && CHOICES.includes(body.choice) ? body.choice : null;
+  if (isReply ? !choice : !message) return json({ error: "empty" }, 400);
 
   const store = getStore({ name: "feedback", consistency: "strong" });
-  const entry = { name: clean(body.name, 40), message, ts: Date.now(), sent: false };
+  const entry = { name: clean(body.name, 40), message, ts: Date.now(), sent: false, ...(isReply ? { kind: "javob", choice } : {}) };
   const key = `f/${entry.ts}-${randomUUID()}`;
   await store.setJSON(key, entry);
 
