@@ -23,6 +23,12 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Nozik">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://commons.wikimedia.org">
+<link rel="preconnect" href="https://upload.wikimedia.org">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -349,7 +355,40 @@ body.i3d .intro{display:flex;flex-direction:column;align-items:center;justify-co
 /* phone menu: scrolls on short screens, and the bear steps aside while it is open */
 #drawer{overflow-y:auto;overscroll-behavior:contain}
 body.mo #bear{opacity:0;pointer-events:none;transition:opacity .3s}
+
+/* readable text colours: deeper "ink" shades of the gold and rose for text in light mode */
+:root{--goldt:#7d5a1d;--roset:#a83560}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--goldt:#e7c27a;--roset:#ff8fb1}}
+:root[data-theme="dark"]{--goldt:#e7c27a;--roset:#ff8fb1}
+.hi,.itg,.tl small,.tg{color:var(--goldt)}
+.fc em,.lt h3{color:var(--roset)}
+.pn small{color:#7d5a1d}
+/* typography */
+h1,h2,h3,.big,.lead{text-wrap:balance}
+p,li{text-wrap:pretty}
+::selection{background:rgba(217,95,133,.3)}
+.pg,#det,#drawer,#cl{scrollbar-width:thin;scrollbar-color:rgba(138,35,70,.35) transparent}
+/* while the 3D flower loads: a softly breathing peony where it will appear */
+.intro{position:relative}
+body.i3d:not(.flready) .intro::after{content:'';position:absolute;left:50%;top:44%;width:64px;height:64px;margin:-32px 0 0 -32px;background:url(/favicon.svg) center/contain no-repeat;opacity:.55;animation:ldp 1.8s ease-in-out infinite}
+@keyframes ldp{50%{transform:scale(1.14);opacity:.9}}
+/* favourite details: content eases in, also when swiping to the next one */
+#dc>*:not(.pn){animation:dcin .5s cubic-bezier(.2,.8,.2,1) both}
+#dc>*:nth-child(2){animation-delay:.05s}#dc>*:nth-child(3){animation-delay:.1s}#dc>*:nth-child(4){animation-delay:.15s}
+@keyframes dcin{from{opacity:0;transform:translateY(10px)}}
+/* now playing */
+#np{position:fixed;z-index:31;right:16px;top:calc(env(safe-area-inset-top,0px) + 78px);display:flex;align-items:center;gap:3px;padding:7px 14px 7px 12px;border-radius:99px;background:var(--nav);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--ln);box-shadow:0 10px 30px rgba(138,35,70,.18);font:italic 600 15px 'Cormorant Garamond',Georgia,serif;color:var(--hd);opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .6s,transform .6s cubic-bezier(.2,.8,.2,1)}
+#np.on{opacity:1;transform:none}
+#np i{width:3px;height:10px;border-radius:2px;background:var(--rose);animation:eq .9s ease-in-out infinite alternate}#np i:nth-child(2){animation-delay:.25s}#np i:nth-child(3){animation-delay:.5s}
+#np span{margin-left:6px}
+@media(min-width:1101px){#np{right:max(16px,calc(50% - 560px))}}
+
+/* phones/tablets: "now playing" sits inside the top bar, between the name and the buttons */
+#np b{font-weight:inherit}
+@media(max-width:1100px){#np{left:50%;right:auto;top:calc(env(safe-area-inset-top,0px) + 34px);transform:translate(-50%,-6px);padding:6px 12px 6px 10px;font-size:14px;box-shadow:none}#np.on{transform:translate(-50%,0)}#nav.sm~#np{top:calc(env(safe-area-inset-top,0px) + 20px)}.npa{display:none}}
+@media(max-width:360px){#np span{display:none}}
 </style></head><body>
+<script>try{var c=document.createElement("canvas");if(c.getContext("webgl")||c.getContext("experimental-webgl"))document.body.classList.add("i3d")}catch(e){}</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="gul" viewBox="-50 -50 100 100"><circle r="47"/><circle r="38" stroke-dasharray="1 5"/><circle r="8"/><g id="pp"><ellipse cy="-24" rx="7" ry="13"/><path d="M0-37V-45"/></g><use href="#pp" transform="rotate(45)"/><use href="#pp" transform="rotate(90)"/><use href="#pp" transform="rotate(135)"/><use href="#pp" transform="rotate(180)"/><use href="#pp" transform="rotate(225)"/><use href="#pp" transform="rotate(270)"/><use href="#pp" transform="rotate(315)"/></symbol>
 <symbol id="bodom" viewBox="-30 -45 60 90"><path d="M0-42C20-24 26 6 9 30c-4 6-14 6-18 0C-26 6-20-24 0-42Z"/><path d="M0-26C9-14 10 2 3 16"/><circle cy="24" r="3"/></symbol>
@@ -359,6 +398,7 @@ body.mo #bear{opacity:0;pointer-events:none;transition:opacity .3s}
 <div id="orn" aria-hidden="true"><div id="ghost"></div><div id="fname"></div>
 </div>
 <header id="nav"><div class="nb"><button class="brand" onclick="go(0)" aria-label="Boshiga qaytish"><svg class="mk" viewBox="0 0 68 74" aria-hidden="true"><use href="#mark"/></svg>Nozik</button><nav id="links"></nav><div class="rt"><button id="mus" aria-label="Musiqani yoqish yoki oʻchirish"><i></i><i></i><i></i><i></i></button><button id="burger" aria-label="Menyu" aria-expanded="false"><i></i><i></i></button></div></div></header>
+<div id="np" role="status" aria-live="polite"><i></i><i></i><i></i><span><b class="npa">Ravyn Lenae — </b>Love Me Not</span></div>
 <div id="scrim"></div><aside id="drawer"><nav id="dl"></nav></aside>
 <section class="pg" id="p-bosh"><div class="wrap"><div class="intro"><p class="itg">Kichik bir dunyo, faqat sen uchun</p><button class="scr" type="button">Pastga suring<i></i></button></div><div class="hl">
 <div class="htxt"><div class="swan" aria-hidden="true"><svg class="swan-svg" viewBox="0 0 220 150" role="img" aria-label="Oqqush va uning suvdagi aksi"><defs><linearGradient id="swB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f7e4ec"/></linearGradient><linearGradient id="swG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f3d3df"/></linearGradient><linearGradient id="swW" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b98a3e" stop-opacity="0"/><stop offset=".25" stop-color="#b98a3e" stop-opacity=".65"/><stop offset=".75" stop-color="#b98a3e" stop-opacity=".65"/><stop offset="1" stop-color="#b98a3e" stop-opacity="0"/></linearGradient><linearGradient id="swF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="swM" maskUnits="userSpaceOnUse" x="0" y="105" width="220" height="45"><rect x="0" y="105" width="220" height="45" fill="url(#swF)"/></mask><filter id="swR" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.1" numOctaves="1" seed="3"><animate attributeName="baseFrequency" dur="7s" values="0.012 0.1;0.016 0.14;0.012 0.1" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter><linearGradient id="swK" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6a46a"/><stop offset="1" stop-color="#e0703c"/></linearGradient><symbol id="swS" viewBox="0 0 220 150"><g stroke="#a8792f" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"><path d="M88 98C74 82 78 66 92 54C104 44 106 30 96 22C90 17 82 17 77 21" fill="none" stroke-width="10.4"/><ellipse cx="78.4" cy="22.4" rx="7" ry="5.3" transform="rotate(-6 78.4 22.4)" fill="#fff"/><path d="M88 98C74 82 78 66 92 54C104 44 106 30 96 22C90 17 82 17 77 21" fill="none" stroke="url(#swB)" stroke-width="8"/><path d="M72.6 20.4C68.9 20.9 65.2 22.7 62.3 25C61.4 25.8 61.8 26.9 62.9 26.9C66.4 26.9 70.4 26.2 73.8 25.1Z" fill="url(#swK)" stroke="#b45a2b" stroke-width=".6"/><path d="M62.3 25C61.4 25.8 61.8 26.9 62.9 26.9L64.3 26.8C63.5 26.2 63.3 25.1 63.8 24.2Z" fill="#2b1220" stroke="none"/><path d="M71.2 21.1C71.9 19.6 73.7 19.2 74.8 20.3C74.1 21.4 72.6 21.8 71.2 21.1Z" fill="#2b1220" stroke="none"/><circle cx="79.4" cy="21.1" r="1" fill="#2b1220" stroke="none"/><circle cx="79.7" cy="20.8" r=".32" fill="#fff" stroke="none"/><path d="M74 104C66 92 74 82 92 82C110 82 122 80 134 72C148 62 162 56 180 50C188 48 193 52 190 58C186 66 186 74 188 82C190 96 174 104 154 104Z" fill="url(#swB)"/><path d="M102 91C120 70 148 59 174 55C164 66 152 80 134 90C122 97 108 98 102 91Z" fill="url(#swG)"/><path d="M114 89C130 77 148 69 166 62" fill="none" stroke-opacity=".75"/><path d="M124 92C139 83 152 75 164 68" fill="none" stroke-opacity=".55"/><path d="M108 101C126 101 144 98 160 92" fill="none" stroke-opacity=".4"/></g></symbol></defs><g class="sw-rip" fill="none" stroke="#b98a3e" stroke-width=".7"><ellipse cx="128" cy="105" rx="58" ry="3.2"/><ellipse cx="128" cy="105" rx="58" ry="3.2"/></g><line x1="8" y1="105" x2="212" y2="105" stroke="url(#swW)" stroke-width="1"/><g mask="url(#swM)" opacity=".5"><g filter="url(#swR)"><g transform="translate(0 209) scale(1 -1)"><use href="#swS" class="sw-bob" width="220" height="150"/></g></g></g><use href="#swS" class="sw-bob" width="220" height="150"/></svg></div><div class="hi">Bu sahifani sen uchun yasadim</div><h1>Salom, Nozik</h1>
@@ -421,7 +461,6 @@ body.mo #bear{opacity:0;pointer-events:none;transition:opacity .3s}
 <div id="bmenu"><button id="bm1">Ayiqcha bilan gaplashish</button><button id="bm2">Keyingi sahifa →</button></div></div>
 <div id="chat" role="dialog" aria-label="Ayiqcha chatbot"><div class="ch"><b>Ayiqcha</b><small>chatbot</small><button id="cx" aria-label="Yopish">✕</button></div><div id="cl" aria-live="polite"></div><div id="cq"></div><div class="cf"><input id="ci" placeholder="Xabar yoz..." autocomplete="off" aria-label="Xabar"><button class="b" id="csn" aria-label="Yuborish">➤</button></div></div>
 <audio id="au" loop preload="none" src="song.m4a"></audio>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],pgs=$$('.pg'),N=pgs.length,NM=8;
 const R=['bosh','dunyo','xotira','oyinlar','tanqid','test','kechirim','vada','feedback','contact'],ST=['Bosh','Sevimlilaring','Xotiralar','Oʻyinlar','Tanqid','Test','Kechirim','Vaʼdalarim','Fikring','Aloqa'],GW=['Nozik','Dunyo','Xotira','Oʻyin','Tanqid','Biz','Kechir','Vaʼda','Fikr','Aloqa'];
@@ -487,8 +526,10 @@ fp.forEach(m=>{const o=m.userData;m.position.y-=o.v*(1+sw*4);m.position.x+=Math.
 for(let i=0;i<B;i++){if(bl[i]>0){for(let j=0;j<3;j++){bp[i*3+j]+=bv[i*3+j];bv[i*3+j]*=.97}bl[i]-=.013;const f=Math.max(bl[i],0);bc.set([f,f*.7,f*.8],i*3)}else bc.set([0,0,0],i*3)}
 bg.attributes.position.needsUpdate=bg.attributes.color.needsUpdate=true;R.render(S,C)})();
 return api}
-let F={openT:0,burst(){},setFlower(){},spin(){},names:[]};try{F=scene()}catch(e){}
-if(F.openT){document.body.classList.add('i3d');$('#p-bosh .scr').onclick=()=>{const p=$('#p-bosh');p.scrollTo({top:p.querySelector('.hl').offsetTop-80,behavior:'smooth'})}}
+let F={openT:0,burst(){},setFlower(){},spin(){},names:[]};
+$('#p-bosh .scr').onclick=()=>{const p=$('#p-bosh');p.scrollTo({top:p.querySelector('.hl').offsetTop-80,behavior:'smooth'})};
+function noFlower(){if(!F.openT)document.body.classList.remove('i3d')}
+if(document.body.classList.contains('i3d')){const t=document.createElement('script');t.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';t.crossOrigin='anonymous';t.onload=()=>{try{F=scene();F.setFlower(cur);fnm(cur);document.body.classList.add('flready')}catch(e){noFlower()}};t.onerror=noFlower;document.head.append(t)}
 const SPL={'Olivia Rodrigo':'artist/1McMsnEElThX1knmY4oliG','Olivia Rodrigo deja vu':'track/6HU7h9RYOaPRFeh0R3UeAr','Olivia Rodrigo traitor':'track/6F9U58EHsIPgvQs5eb8O2J','KATSEYE':'artist/3c0gDdb9lhnHGFtP4prQpn','KATSEYE Animal':'track/4j3YeF9Jll295K6dIvA7gR','Jennie':'artist/250b0Wlc5Vk0CoUsaCY84M','Lisa':'artist/5L1lO4eRHmJ7a0Q6csE5cT','BLACKPINK':'artist/41MozSoPIsD1dJM0CLPjZF','Ravyn Lenae Love Me Not':'track/0lMP8Rri6AIjtMIRS1tZqe'};
 const sp=n=>'https://open.spotify.com/'+(SPL[n]||'search/'+encodeURIComponent(n));
 const PH={'Raqamli qala':['Plaza_de_Espana,_Seville,_Spain.jpg','50% 50%'],'Yalı Çapkını':['Hekimbaşı_Salih_Efendi_Yalısı_on_the_Bosphorus,_Turkey001.jpg','50% 50%'],'Olivia Rodrigo':['Olivia_Rodrigo_at_White_House.jpg','50% 25%'],'KATSEYE':['KATSEYE_in_2024.jpg','50% 30%'],'Jennie va Lisa':['Blackpink_PUBG_210321.jpg','50% 25%'],'Laghman':['Uyghur_Lagman.jpg','50% 50%'],'Kit Kat':['Kit-Kat-Split_(crop).jpg','50% 50%'],'Fuse Tea':['Iced_tea.jpg','50% 50%'],'Mushuklar':['Orange_and_white_tabby_cat-Portrait-Hisashi-02.jpg','50% 35%'],'Yoz':['SunflowerSunset2.jpg','50% 50%'],'Oshpazlik va kinolar':['Griddle_pan.jpg','50% 50%']};
@@ -519,6 +560,7 @@ function mood(v,c){base=v;if(gn){const t=ac.currentTime;gn.gain.cancelScheduledV
 function pulse(){if(!gn)return;const t=ac.currentTime;gn.gain.cancelScheduledValues(t);gn.gain.setValueAtTime(base*1.5,t);gn.gain.setTargetAtTime(base,t+.05,.4)}
 function chime(){if(!ac)return;const t=ac.currentTime,o=ac.createOscillator(),g=ac.createGain(),f=[784,880,988,1175,1319][Math.random()*5|0];o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.09,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.5);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+.55)}
 mu.onclick=()=>{if(Date.now()-st<700)return;au.dataset.u=1;au.paused?au.play().catch(()=>{}):au.pause()};au.onplay=au.onpause=()=>mu.classList.toggle('pl',!au.paused);
+au.addEventListener('playing',()=>{const n=$('#np');if(n.dataset.s)return;n.dataset.s=1;n.classList.add('on');setTimeout(()=>n.classList.remove('on'),4500)});
 function petals(x,y){const C=['#f58fb0','#ffc7d8','#fff3ef','#e0698c','#f3a2bb'];for(let i=0;i<12;i++){const p=document.createElement('i'),s=8+Math.random()*10,a=Math.random()*6.283,d=40+Math.random()*90,r=()=>Math.random();p.className='pt';p.style.cssText=`left:${x}px;top:${y}px;width:${s}px;height:${s*1.5}px;background:${C[i%5]}`;document.body.append(p);
 p.animate([{transform:'translate(-50%,-50%) scale(.3)',opacity:1},{transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d-30}px) rotate(${r()*360}deg) scale(1)`,opacity:1,offset:.45},{transform:`translate(${Math.cos(a)*d*1.2+r()*30}px,${Math.sin(a)*d+120+r()*80}px) rotate(${r()*720}deg) scale(.8)`,opacity:0}],{duration:1100+r()*700,easing:'cubic-bezier(.2,.7,.3,1)'}).onfinish=()=>p.remove()}}
 addEventListener('pointerdown',e=>{if(!started){started=1;st=Date.now();aud();ac&&ac.resume();au.play().catch(()=>{started=0});mood(...M[cur])}},true);
@@ -578,14 +620,16 @@ pgs.forEach((p,k)=>{const w=p.firstElementChild,u=k>=NM,pv=(k+NM-1)%NM,nx=(k+1)%
 $$('.rv').forEach(e=>io.observe(e));$$('.htxt').forEach(p=>[...p.children].forEach((c,i)=>c.style.setProperty('--k',i)));
 const lk=i=>`<button class="lk" data-i="${i}" data-go="${i}" style="--i:${i}">${ST[i]}</button>`;
 $('#links').innerHTML=[...Array(NM).keys()].map(lk).join('');$('#dl').innerHTML=[...Array(N).keys()].map(lk).join('');
-function openD(i){di=(i+FV.length)%FV.length;const f=FV[di];$('#dc').innerHTML=`<div class="dh">${phI(f,'de')}<div><span class="tg">${f.k}</span><h2>${f.n}</h2><p class="lead">${f.l}</p></div></div>${f.p?`<div class="pn"><small>Farkhoddan</small><p>${f.p}</p></div>`:''}<div class="dg gl"><div><h3>Haqida</h3><p>${f.t}</p></div><div><h3>Qiziq faktlar</h3><ul class="fa">${f.f.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>${f.a.length?`<div class="dl">${f.a.map(l=>`<a class="b" target="_blank" rel="noopener" href="${l[1]}">${l[0]}</a>`).join('')}</div>`:''}`;if(PH[f.n])$('#dc').querySelector('.dg').insertAdjacentHTML('beforeend',`<small class="pcr">Rasm: <a href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent(PH[f.n][0])}" target="_blank" rel="noopener">Wikimedia Commons</a></small>`);
-$('#det').classList.add('on');$('#det').scrollTop=0;mood(.28,2500);F.burst(40)}
+function openD(i,how){const wasOpen=$('#det').classList.contains('on');di=(i+FV.length)%FV.length;const f=FV[di];$('#dc').innerHTML=`<div class="dh">${phI(f,'de')}<div><span class="tg">${f.k}</span><h2>${f.n}</h2><p class="lead">${f.l}</p></div></div>${f.p?`<div class="pn"><small>Farkhoddan</small><p>${f.p}</p></div>`:''}<div class="dg gl"><div><h3>Haqida</h3><p>${f.t}</p></div><div><h3>Qiziq faktlar</h3><ul class="fa">${f.f.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>${f.a.length?`<div class="dl">${f.a.map(l=>`<a class="b" target="_blank" rel="noopener" href="${l[1]}">${l[0]}</a>`).join('')}</div>`:''}`;if(PH[f.n])$('#dc').querySelector('.dg').insertAdjacentHTML('beforeend',`<small class="pcr">Rasm: <a href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent(PH[f.n][0])}" target="_blank" rel="noopener">Wikimedia Commons</a></small>`);
+$('#det').classList.add('on');$('#det').scrollTop=0;mood(.28,2500);F.burst(40);if(how!=='none'){const h='#'+R[1]+'/'+di;try{wasOpen||how==='replace'?history.replaceState({det:di},'',h):history.pushState({det:di},'',h)}catch(e){}}}
 function closeD(s){if(!$('#det').classList.contains('on'))return;$('#det').classList.remove('on');if(!s)mood(...M[cur])}
-$('#dback').onclick=()=>closeD();$('#dp').onclick=()=>openD(di-1);$('#dnx').onclick=()=>openD(di+1);
+function backD(){if(history.state&&history.state.det!==undefined)history.back();else{closeD();try{history.replaceState(null,'','#'+R[cur])}catch(e){}}}
+$('#dback').onclick=backD;$('#dp').onclick=()=>openD(di-1,'replace');$('#dnx').onclick=()=>openD(di+1,'replace');
+{let sx=0,sy=0,st=0;const D=$('#det');D.addEventListener('touchstart',e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=Date.now()},{passive:true});D.addEventListener('touchend',e=>{const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(Date.now()-st<700&&Math.abs(dx)>70&&Math.abs(dy)<Math.abs(dx)*.5)openD(di+(dx<0?1:-1),'replace')},{passive:true})}
 document.addEventListener('click',e=>{const fy=e.target.closest('[data-fly]');if(fy){fly(fy);return}const g=e.target.closest('[data-go]');if(g){document.body.classList.remove('mo');go(+g.dataset.go);return}const f=e.target.closest('[data-f]');if(f)openD(+f.dataset.f)});
 $('.brand').onclick=()=>go(0);
 $('#burger').onclick=()=>{const o=document.body.classList.toggle('mo');$('#burger').setAttribute('aria-expanded',o)};$('#scrim').onclick=()=>document.body.classList.remove('mo');
-addEventListener('keydown',e=>{if(e.key=='Escape'){document.body.classList.remove('mo');closeD()}});
+addEventListener('keydown',e=>{if(e.key=='Escape'){document.body.classList.remove('mo');if($('#det').classList.contains('on'))backD();return}const a=document.activeElement;if(e.altKey||e.ctrlKey||e.metaKey||e.shiftKey||(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))||$('#chat').classList.contains('on'))return;if(e.key=='ArrowRight'||e.key=='ArrowLeft'){const d=e.key=='ArrowRight'?1:-1;if($('#det').classList.contains('on'))openD(di+d,'replace');else cyc(d);e.preventDefault()}});
 function shrink(){$('#nav').classList.toggle('sm',pgs[cur].scrollTop>20);document.body.classList.toggle('flfull',cur===0&&pgs[0].scrollTop<innerHeight*.5)}
 
 let flying=0,fnT=0;
@@ -612,7 +656,8 @@ $$('.lk').forEach(b=>b.classList.toggle('cur',+b.dataset.i==i));$$('.bgl').forEa
 pgs[i].querySelectorAll('.rv').forEach(e=>{e.classList.remove('vis');void e.offsetWidth;io.observe(e)});
 shrink();off=0;const g=$('#ghost');g.style.opacity=0;setTimeout(()=>{g.textContent=GW[i];g.style.opacity=1},550);
 if(fx!='globe'){F.setFlower(i);F.burst(50);fnm(i)}if(R[i]=='tanqid'&&window.critLoad)critLoad();mood(...M[i]);if(window._qB){clearTimeout(window._qT);window._qT=setTimeout(()=>card(...Q[qi++%Q.length]),1500)}window._qB=1;if(!nh)location.hash=R[i]}
-addEventListener('hashchange',()=>{const i=R.indexOf(location.hash.slice(1));if(i>=0&&i!=cur)go(i,1)});
+function route(){const [pg,d]=location.hash.slice(1).split('/'),i=R.indexOf(pg);if(i<0)return;if(i!=cur)go(i,1);if(i===1&&d!==undefined&&FV[+d]){if(!($('#det').classList.contains('on')&&di===+d))openD(+d,'none')}else if($('#det').classList.contains('on'))closeD()}
+addEventListener('hashchange',route);
 let stp=0;$('#gb').onclick=()=>{const a=$('#arena');let n=0,t=0;a.innerHTML='';$('#cnt').textContent=0;$('#gm').textContent='';$('#gb').disabled=true;const E=[['Kit Kat','🍫'],['Laghman','🍜'],['Mushuklar','🐱'],['Fuse Tea','🧃'],['Yoz','☀️'],['Oshpazlik va kinolar','🍳'],[0,'🌸']];
 const iv=setInterval(()=>{if(++t>40){clearInterval(iv);setTimeout(()=>{$('#gb').disabled=false;$('#gb').textContent='Yana oʻynaymizmi?';$('#gm').textContent='Zoʻr, '+n+' ta tutding!';F.burst(120)},3600);return}
 const e=document.createElement('button');e.className='fall';{const q=E[Math.random()*E.length|0];e.innerHTML=`<img src="${cU(q[0]?PH[q[0]][0]:XP.pion,120)}" alt="" draggable="false" referrerpolicy="no-referrer" onerror="this.parentNode.textContent='${q[1]}'">`}e.style.left=Math.random()*82+'%';e.style.animationDuration=3.4+Math.random()*2+'s';e.onclick=()=>{e.remove();$('#cnt').textContent=++n;F.burst(14)};e.onanimationend=()=>e.remove();a.appendChild(e)},620)};
@@ -703,5 +748,6 @@ render();load();setInterval(()=>{if(pgs[cur].id=='p-tanqid'&&!document.hidden&&!
 bt.onclick=async()=>{const m=g('#fbm').value.trim();if(!m){st.textContent='Avval biror narsa yoz.';return}bt.disabled=true;st.textContent='Yuborilmoqda…';
 try{const r=await fetch('/api/feedback',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:g('#fbn').value.trim(),message:m})}),d=await r.json().catch(()=>({}));if(!r.ok||!d.ok)throw 0;
 g('#fbm').value='';st.textContent=d.delivered?'Rahmat! Fikring Farkhodga yetib bordi.':'Rahmat! Fikring saqlandi, Farkhod uni albatta oʻqiydi.';F.burst(60)}catch(e){st.textContent='Yuborib boʻlmadi. Internetni tekshirib, qayta urinib koʻr.'}bt.disabled=false}})();
-const i0=R.indexOf(location.hash.slice(1));go(i0>=0?i0:0,1);setTimeout(()=>card('Salom, Nozik! Meni bossang, senga bir gap aytaman.',''),1200);
+{const [pg,d]=location.hash.slice(1).split('/'),i0=R.indexOf(pg);go(i0>=0?i0:0,1);if(i0===1&&d!==undefined&&FV[+d])openD(+d,'none')}
+{const h=new Date().getHours(),g=h>=5&&h<11?'Xayrli tong, Nozik!':h>=11&&h<17?'Xayrli kun, Nozik!':h>=17&&h<23?'Xayrli kech, Nozik!':'Hali uxlamadingmi, Nozik?';setTimeout(()=>card(g+' Meni bossang, senga bir gap aytaman.',''),1200)}
 </script></body></html>
