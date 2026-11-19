@@ -1,8 +1,12 @@
 // Shared posts for the "Tanqid" page, visible to everyone who opens the site.
 // Each visitor's browser keeps a random owner token; only the token's hash is
 // stored, and only the author of a post can edit or delete it.
+//
+// Optional moderation: set the Netlify environment variable TANQID_ADMIN_KEY
+// (12+ characters). Opening the site once as /?admin=<key> lets that browser
+// delete any post (never edit). Without the variable, moderation is off.
 import { getStore } from "@netlify/blobs";
-import { createHash, randomUUID } from "node:crypto";
+import { createHash, randomUUID, timingSafeEqual } from "node:crypto";
 import { json, clean, readJson } from "../lib/http.mjs";
 import { notify } from "../lib/telegram.mjs";
 
@@ -10,6 +14,12 @@ const MAX_TEXT = 1000;
 const MAX_NAME = 40;
 const MAX_ITEMS = 500;
 const hash = (token) => createHash("sha256").update(token).digest("hex");
+
+function isAdmin(key) {
+  const admin = process.env.TANQID_ADMIN_KEY || "";
+  if (admin.length < 12 || !key) return false;
+  return timingSafeEqual(Buffer.from(hash(String(key))), Buffer.from(hash(admin)));
+}
 
 async function keys(store) {
   const { blobs } = await store.list({ prefix: "i/" });
@@ -30,7 +40,8 @@ export default async (req) => {
   const store = getStore({ name: "tanqid", consistency: "strong" });
 
   if (req.method === "GET") {
-    return json({ items: publicView(await load(store), clean(req.headers.get("x-owner"), 100)) });
+    const admin = isAdmin(req.headers.get("x-admin"));
+    return json({ items: publicView(await load(store), clean(req.headers.get("x-owner"), 100)), ...(admin ? { admin } : {}) });
   }
   if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
 
@@ -39,6 +50,7 @@ export default async (req) => {
   const token = clean(body.owner, 100);
   if (token.length < 16) return json({ error: "missing_owner" }, 400);
   const owner = hash(token);
+  const admin = isAdmin(body.admin);
 
   if (body.action === "add") {
     const side = body.side === "me" || body.side === "her" ? body.side : null;
@@ -55,7 +67,8 @@ export default async (req) => {
     const key = id && (await keys(store)).find((k) => k.endsWith(`-${id}`));
     const item = key && (await store.get(key, { type: "json" }));
     if (!item) return json({ error: "not_found" }, 404);
-    if (item.owner !== owner) return json({ error: "forbidden" }, 403);
+    const own = item.owner === owner;
+    if (!own && !(admin && body.action === "delete")) return json({ error: "forbidden" }, 403);
     if (body.action === "delete") {
       await store.delete(key);
     } else {
@@ -67,7 +80,7 @@ export default async (req) => {
     return json({ error: "unknown_action" }, 400);
   }
 
-  return json({ items: publicView(await load(store), token) });
+  return json({ items: publicView(await load(store), token), ...(admin ? { admin } : {}) });
 };
 
 export const config = { path: "/api/tanqid" };
