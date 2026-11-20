@@ -425,6 +425,12 @@ body:not(.flfull) #fname.on:not(.fnt){opacity:0}
 .reply .crt{max-width:520px;margin:14px auto 4px;text-align:left}
 #rsend:disabled{cursor:default}
 .rdone .sorry{border:0;margin:6px 0 6px;font-size:22px}
+
+/* taps: no blue browser highlight, no accidental text/image selection on controls, no double-tap delay */
+html{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button,a,[role="button"],.lk,.fc,.hc,.brand,.st,.swan,.gbtn,#arena,#sky,#cs,.fall,.bl,.rch,.sc,#np,#fname{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+img,svg{-webkit-user-drag:none}
+button img,.fc img,.fall img,.tn img{pointer-events:none}
 </style></head><body>
 <script>try{var c=document.createElement("canvas");if(c.getContext("webgl")||c.getContext("experimental-webgl"))document.body.classList.add("i3d")}catch(e){}</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -700,6 +706,7 @@ pgs[i].querySelectorAll('.rv').forEach(e=>{e.classList.remove('vis');void e.offs
 shrink();off=0;const g=$('#ghost');g.style.opacity=0;setTimeout(()=>{g.textContent=GW[i];g.style.opacity=1},550);
 if(fx!='globe'){F.setFlower(i);F.burst(50);fnm(i)}if(R[i]=='tanqid'&&window.critLoad)critLoad();mood(...M[i]);if(window._qB){clearTimeout(window._qT);window._qT=setTimeout(()=>card(...Q[1+qi++%(Q.length-1)]),1500)}window._qB=1;document.body.classList.toggle('rd',R[i]==='kechirim');$('#rp').style.setProperty('--p',0);if(!nh)location.hash=R[i]}
 function route(){const [pg,d]=location.hash.slice(1).split('/'),i=R.indexOf(pg);if(i<0)return;if(i!=cur)go(i,1);if(i===1&&d!==undefined&&FV[+d]){if(!($('#det').classList.contains('on')&&di===+d))openD(+d,'none')}else if($('#det').classList.contains('on'))closeD()}
+const RMQ=matchMedia('(prefers-reduced-motion: reduce)');addEventListener('pointerdown',e=>{if(RMQ.matches)return;const t=e.target.closest&&e.target.closest('button,a.b,.lk,.brand,.fc,.hc,.st');if(!t||t.disabled||(t.closest('#bear')&&!t.closest('#bmenu'))||t.classList.contains('fall')||t.classList.contains('bl'))return;try{t.animate([{scale:1},{scale:.93,offset:.35},{scale:1}],{duration:320,easing:'cubic-bezier(.3,.7,.4,1.5)'})}catch(err){}},{passive:true});
 addEventListener('hashchange',route);
 (function(){const S=Date.UTC(2022,8,19)-5*36e5,el={};$$('.sc b').forEach(b=>el[b.dataset.u]=b);
 function diff(now){const T=new Date(now+5*36e5);let y=T.getUTCFullYear()-2022,mo=T.getUTCMonth()-8,d=T.getUTCDate()-19;
@@ -722,7 +729,7 @@ const prev=LS2.get('javob');if(prev&&MSG[prev.c])done(prev.c)})();
 {const big=$('#p-kechirim .big');let done=0;if(big&&'IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!done&&R[cur]==='kechirim'){done=1;setTimeout(()=>{F.burst(220);forceDance('disco');card(Q[0][0],Q[0][1])},700)}}),{threshold:.9}).observe(big)}
 let stp=0;$('#gb').onclick=()=>{const a=$('#arena');let n=0,t=0;a.innerHTML='';$('#cnt').textContent=0;$('#gm').textContent='';$('#gb').disabled=true;const E=[['Kit Kat','🍫'],['Laghman','🍜'],['Mushuklar','🐱'],['Fuse Tea','🧃'],['Yoz','☀️'],['Oshpazlik va kinolar','🍳'],[0,'🌸']];
 const iv=setInterval(()=>{if(++t>40){clearInterval(iv);setTimeout(()=>{$('#gb').disabled=false;$('#gb').textContent='Yana oʻynaymizmi?';$('#gm').textContent='Zoʻr, '+n+' ta tutding!';F.burst(120)},3600);return}
-const e=document.createElement('button');e.className='fall';{const q=E[Math.random()*E.length|0];e.setAttribute('aria-label',q[0]||'Pion gul');e.innerHTML=`<img src="${cU(q[0]?PH[q[0]][0]:XP.pion,120)}" alt="" draggable="false" referrerpolicy="no-referrer" onerror="this.parentNode.textContent='${q[1]}'">`}e.style.left=Math.random()*82+'%';e.style.animationDuration=3.4+Math.random()*2+'s';e.onclick=()=>{e.remove();$('#cnt').textContent=++n;F.burst(14)};e.onanimationend=()=>e.remove();a.appendChild(e)},620)};
+const e=document.createElement('button');e.className='fall';{const q=E[Math.random()*E.length|0];e.setAttribute('aria-label',q[0]||'Pion gul');e.innerHTML=`<img src="${cU(q[0]?PH[q[0]][0]:XP.pion,120)}" alt="" draggable="false" referrerpolicy="no-referrer" onerror="this.parentNode.textContent='${q[1]}'">`}e.style.left=Math.random()*82+'%';e.style.animationDuration=3.4+Math.random()*2+'s';const hit=ev=>{if(ev&&ev.cancelable)ev.preventDefault();if(e.dataset.hit)return;e.dataset.hit=1;$('#cnt').textContent=++n;F.burst(14);e.style.pointerEvents='none';try{e.animate([{opacity:1,scale:1},{opacity:0,scale:1.7}],{duration:240,easing:'ease-out',fill:'forwards'}).onfinish=()=>e.remove()}catch(err){e.remove()}};e.onpointerdown=hit;e.onclick=hit;e.onanimationend=()=>e.remove();a.appendChild(e)},620)};
 $('#wb').onclick=()=>{const w=WS[Math.random()*WS.length|0],m=$('#wm');m.innerHTML=tn(w[1]?PH[w[1]][0]:XP.pion,'🌸','big');m.append(document.createTextNode(w[0]));F.burst(60)};
 (function(){const Qz=[['Biz qaysi yili tanishganmiz?',['2021','2022','2023'],1,'Toʻgʻri, 2022. Yangi maktabda boshlangan edi.'],['Yozda kasalxona hovlisida necha soat gaplashdik?',['30 daqiqa','1 soat','2 soatdan koʻproq'],2,'2 soatdan oshdi, lekin menga baribir kam tuyuldi.'],['Faqat ikkalamiz tushunadigan soʻz qaysi?',['jonim','boʻq','azizim'],1,'Boʻq, albatta :) Faqat ikkalamizning tilimiz.']];let i=0,sc=0;const Bx=$('#qz');
 (function r(){const q=Qz[i];Bx.innerHTML=`<h3>${q[0]}</h3>`+q[1].map((o,j)=>`<button class="b g opt" data-j="${j}">${o}</button>`).join('')+'<p id="qn"></p>';
@@ -737,7 +744,7 @@ fxs.forEach(e=>{const d=+e.dataset.d,s=e.dataset.s?sc*d*.004:0;e.style.transform
 
 (function(){const MS='Sen men uchun juda qadrlisan, Nozik.',Ar=[...MS],sky=$('#sky'),sm=$('#sm'),sb=$('#sb'),C=['#f58fb0','#ffc7d8','#fff3ef','#e0698c','#f3a2bb','#d6a856'];let n=0,iv=0;
 sb.onclick=()=>{n=0;sm.textContent='';sky.innerHTML='';sb.disabled=true;clearInterval(iv);iv=setInterval(()=>{if(n>=Ar.length||!$('#p-oyinlar').classList.contains('on'))return;const b=document.createElement('button');b.className='bl';b.setAttribute('aria-label','Shar');b.style.cssText=`left:${Math.random()*80+4}%;--c:${C[Math.random()*6|0]}`;sky.append(b);const w=Math.random()*60-30,a=b.animate([{transform:'translate(0,0)'},{transform:`translate(${w}px,-210px)`},{transform:`translate(${-w}px,-440px)`}],{duration:4200+Math.random()*2200});a.onfinish=()=>b.remove();
-b.onclick=()=>{b.remove();sm.textContent+=Ar[n++];F.burst(12);if(n>=Ar.length){clearInterval(iv);F.burst(160);sb.disabled=false;sb.textContent='Yana yorib koʻraymi?'}}},650)}})();
+const pop=ev=>{if(ev&&ev.cancelable)ev.preventDefault();if(b.dataset.hit)return;b.dataset.hit=1;b.style.pointerEvents='none';try{a.pause()}catch(err){}try{b.animate([{opacity:1,scale:1},{opacity:0,scale:1.5}],{duration:200,easing:'ease-out',fill:'forwards'}).onfinish=()=>b.remove()}catch(err){b.remove()}sm.textContent+=Ar[n++];F.burst(12);if(n>=Ar.length){clearInterval(iv);F.burst(160);sb.disabled=false;sb.textContent='Yana yorib koʻraymi?'}};b.onpointerdown=pop;b.onclick=pop},650)}})();
 function csInit(){const S=$('#cs'),NS='http://www.w3.org/2000/svg',mk=(q,t,a)=>{const e=document.createElementNS(NS,t);for(const x in a)e.setAttribute(x,a[x]);q.append(e);return e};S.innerHTML='';let k=0;
 const Pt=[...Array(12)].map((_,i)=>{const t=Math.PI*2*i/12;return[150+16*Math.sin(t)**3*7.6,118-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))*7.6]});
 for(let i=0;i<38;i++)mk(S,'circle',{cx:Math.random()*300,cy:Math.random()*260,r:Math.random()*1.2+.3,class:'tw',style:`animation-delay:${Math.random()*3}s`});
