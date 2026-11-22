@@ -15,7 +15,7 @@ engines; only people with the link can find it.
 | `netlify/functions/` | Small backend: shared Tanqid posts (`tanqid.mjs`) and feedback to Telegram (`feedback.mjs`). Data is stored in Netlify Blobs. |
 | `netlify/lib/` | Shared code for the backend (Telegram, request helpers). |
 | `netlify.toml` | Netlify settings: publish `site/`, fill the site address into the link preview, headers, functions. |
-| `functions/`, `lib/` | An older copy of the backend for Cloudflare Pages. Not used on Netlify. |
+| `site/photos/` | Photos on the memories timeline (metadata removed, two sizes each). |
 
 The 3D flower uses three.js, loaded in the background from cdnjs, so the page works
 even before (or without) it. Photos of the favourites come from Wikimedia Commons.
@@ -47,10 +47,12 @@ All texts are in `site/index.html`:
 | Wishes in "Orzu mashinasi" | `const WS=[` |
 | Quiz questions | `const Qz=[` |
 | Starting Tanqid entries | `const SEED=[` |
-| Memories timeline | `id="p-xotira"` |
+| Memories timeline (and its photo) | `id="p-xotira"` |
 | The letter | `id="p-kechirim"` |
 | Promises and contact | `id="p-vada"`, `id="p-contact"` |
 | "Together since" counter (home page) | `class="since"` for the label; the start date is `Date.UTC(2022,8,19)` (months count from 0, Tashkent time) |
+| Birthday (24 July) greeting and note | `const BDAY=` and `Yaxshiyamki borsan!` |
+| Bear chatbot replies | `function local(s)` |
 | Reply to the letter: thank-you texts | `const MSG=` (the answer buttons are in `id="reply"`; the same answers are listed in `CHOICES` in `netlify/functions/feedback.mjs`) |
 | Photos for favourites | `const PH=` (Wikimedia Commons file names) |
 
