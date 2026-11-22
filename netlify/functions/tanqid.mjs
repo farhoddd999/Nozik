@@ -6,20 +6,15 @@
 // (12+ characters). Opening the site once as /?admin=<key> lets that browser
 // delete any post (never edit). Without the variable, moderation is off.
 import { getStore } from "@netlify/blobs";
-import { createHash, randomUUID, timingSafeEqual } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { json, clean, readJson } from "../lib/http.mjs";
 import { notify } from "../lib/telegram.mjs";
+import { isAdmin } from "../lib/admin.mjs";
 
 const MAX_TEXT = 1000;
 const MAX_NAME = 40;
 const MAX_ITEMS = 500;
 const hash = (token) => createHash("sha256").update(token).digest("hex");
-
-function isAdmin(key) {
-  const admin = process.env.TANQID_ADMIN_KEY || "";
-  if (admin.length < 12 || !key) return false;
-  return timingSafeEqual(Buffer.from(hash(String(key))), Buffer.from(hash(admin)));
-}
 
 async function keys(store) {
   const { blobs } = await store.list({ prefix: "i/" });

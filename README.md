@@ -56,6 +56,14 @@ All texts are in `site/index.html`:
 | Reply to the letter: thank-you texts | `const MSG=` (the answer buttons are in `id="reply"`; the same answers are listed in `CHOICES` in `netlify/functions/feedback.mjs`) |
 | Photos for favourites | `const PH=` (Wikimedia Commons file names) |
 
+## Visit counter
+
+The site counts visits anonymously (`netlify/functions/visit.mjs`): one count per
+browser visit, stored only as a date. No names, IP addresses or device details are
+kept, and the footer says so. Your own browser is never counted once you have opened
+the admin link. With `TANQID_ADMIN_KEY` set, open `/?admin=<key>#tanqid` to see
+today, the last 7 days, the total and a 14-day chart at the top of the Tanqid page.
+
 ## Moderating Tanqid
 
 Anyone with the link can write on Tanqid. To remove a post: set `TANQID_ADMIN_KEY`
