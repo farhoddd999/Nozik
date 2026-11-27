@@ -1,7 +1,9 @@
 [build]
   publish = "site"
+  # The whole site is locked by netlify/edge-functions/lock.js (code: SITE_PIN, default 5255).
+  edge_functions = "netlify/edge-functions"
   # Fill in the site's own address for the link-preview tags (Netlify sets $URL).
-  command = 'sed -i "s#__SITE_URL__#${URL}#g" site/index.html'
+  command = 'sed -i "s#__SITE_URL__#${URL}#g" site/index.html site/lock.html'
 
 # Save credits: only the main branch is built; branch and preview builds are skipped.
 [context.branch-deploy]

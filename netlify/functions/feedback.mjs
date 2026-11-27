@@ -4,6 +4,7 @@
 import { getStore } from "@netlify/blobs";
 import { randomUUID } from "node:crypto";
 import { json, clean, readJson } from "../lib/http.mjs";
+import { unlocked } from "../lib/auth.mjs";
 import { notify } from "../lib/telegram.mjs";
 
 // Answers Nozik can give at the end of the letter (kind: "javob").
@@ -16,6 +17,7 @@ const format = (f) =>
     : `💌 Nozik uchun sayti: yangi fikr\nKimdan: ${f.name || "ismsiz"}\nVaqt: ${when(f.ts)}\n\n${f.message}`;
 
 export default async (req) => {
+  if (!unlocked(req)) return json({ error: "locked" }, 401);
   if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
   const body = await readJson(req);
   const message = clean(body?.message, 2000);

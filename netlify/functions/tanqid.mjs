@@ -8,6 +8,7 @@
 import { getStore } from "@netlify/blobs";
 import { createHash, randomUUID } from "node:crypto";
 import { json, clean, readJson } from "../lib/http.mjs";
+import { unlocked } from "../lib/auth.mjs";
 import { notify } from "../lib/telegram.mjs";
 import { isAdmin } from "../lib/admin.mjs";
 
@@ -32,6 +33,7 @@ const publicView = (items, token) => {
 };
 
 export default async (req) => {
+  if (!unlocked(req)) return json({ error: "locked" }, 401);
   const store = getStore({ name: "tanqid", consistency: "strong" });
 
   if (req.method === "GET") {

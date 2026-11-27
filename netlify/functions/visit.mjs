@@ -6,11 +6,13 @@
 import { getStore } from "@netlify/blobs";
 import { randomUUID } from "node:crypto";
 import { json } from "../lib/http.mjs";
+import { unlocked } from "../lib/auth.mjs";
 import { isAdmin } from "../lib/admin.mjs";
 
 const day = (ts) => new Date(ts + 5 * 36e5).toISOString().slice(0, 10); // date in Tashkent
 
 export default async (req) => {
+  if (!unlocked(req)) return json({ error: "locked" }, 401);
   const store = getStore({ name: "visits", consistency: "strong" });
 
   if (req.method === "POST") {
